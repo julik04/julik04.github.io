@@ -5,13 +5,9 @@ import ExpandableItem from "./ExpandableItem";
 import CardProduct from "./CardProduct";
 
 //expandable with a list https://hlstore.ru/catalog/
-//tempalte for one good
-//путь с ресетом
-//css на категории и подкатегории
-//useEffect
 
 const subCategories = {
-  Аксессуары: [""],
+  Аксессуары: ["111", "1221"],
   "Вазелин и масла": [""],
   "Всё для ухода и заживления": [""],
   "Иглы и типсы для татуировки": [""],
@@ -37,11 +33,25 @@ const Products = [
 
 function ShopMain() {
   // const goodsArr = { accessories: ["acc1", "acc2"], oils: ["oils1", "oils2"] };
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [path, setPath] = useState("Главная");
+  console.log(selectedCategories);
+  console.log(`${category} category`);
+
   useEffect(() => {
-    // Сброс пути и установка новой категории
+    // check
     if (category) {
+      setSelectedCategories((prev) => {
+        if (!prev.includes(category)) {
+          return [...prev, category];
+        } else {
+          return [
+            ...prev.slice(0, prev.indexOf(category)),
+            ...prev.slice(prev.indexOf(category) + 1, prev.length),
+          ];
+        }
+      });
       setPath(`Главная > ${category}`);
     } else {
       setPath("Главная"); // Если категория не выбрана, возвращаемся к главной
@@ -82,6 +92,7 @@ function ShopMain() {
                 "Тату машинки",
               ]}
               subCategories={subCategories}
+              selectedCategories={selectedCategories}
             />
 
             <ExpandableItem
@@ -93,6 +104,7 @@ function ShopMain() {
                 "Украшения",
               ]}
               subCategories={subCategories}
+              selectedCategories={selectedCategories}
             />
             <ExpandableItem
               setCategory={setCategory}
