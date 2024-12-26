@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import productSRC from "../assets/product-image.jpg";
+import productSRC from "../../assets/product-image.jpg";
+import CategoryDisplay from "./CategoryDisplay";
+import ExpandableItem from "./ExpandableItem";
+import CardProduct from "./CardProduct";
 
 //expandable with a list https://hlstore.ru/catalog/
 //tempalte for one good
@@ -8,8 +11,19 @@ import productSRC from "../assets/product-image.jpg";
 //useEffect
 
 const subCategories = {
-  Аксессуары: ["subacc1", "subacc2"],
-  "Тату машинки": ["subtatu1", "subtatu2"],
+  Аксессуары: [""],
+  "Вазелин и масла": [""],
+  "Всё для ухода и заживления": [""],
+  "Иглы и типсы для татуировки": [""],
+  "Краска для татуировки": [
+    "Allegory Ink",
+    "Eternal Ink",
+    "Intenze",
+    "Nocturnal",
+    "World Famous",
+  ],
+  "Мыло и пенка": [""],
+  "Тату машинки": [""],
 };
 
 const Products = [
@@ -20,48 +34,6 @@ const Products = [
   },
   { Название: "Опал 2", Цена: "1900", Изображение: productSRC },
 ];
-
-function CardProduct({ title, price, productSRC }) {
-  return (
-    <div className="card">
-      <img src={productSRC} className="gallery__img" alt="1" />
-      <div class="content">
-        <h2 class="title">{title}</h2>
-        <p class="price">{price}</p>
-      </div>
-    </div>
-  );
-}
-
-const ExpandableItem = ({ title, contentArr, setCategory }) => {
-  const [expanded, setExpanded] = useState(false);
-
-  const handleToggle = () => {
-    setExpanded(!expanded);
-  };
-
-  return (
-    <div className={`expandable-element ${expanded ? "expanded" : ""}`}>
-      <div onClick={handleToggle}>
-        <h3 className="expandable">{title}</h3>
-      </div>
-      {expanded
-        ? contentArr?.map((item) => {
-            return (
-              <>
-                <p
-                  className="catalogue-list-expandable"
-                  onClick={() => {
-                    setCategory(item);
-                  }}
-                >{`${item}`}</p>
-              </>
-            );
-          })
-        : ""}
-    </div>
-  );
-};
 
 function ShopMain() {
   // const goodsArr = { accessories: ["acc1", "acc2"], oils: ["oils1", "oils2"] };
@@ -75,9 +47,9 @@ function ShopMain() {
       setPath("Главная"); // Если категория не выбрана, возвращаемся к главной
     }
   }, [category]);
-  console.log("entries", Object.entries(subCategories));
-  console.log("values", Object.values(subCategories));
-  console.log("keys", Object.keys(subCategories));
+  // console.log("entries", Object.entries(subCategories));
+  // console.log("values", Object.values(subCategories));
+  // console.log("keys", Object.keys(subCategories));
 
   return (
     <>
@@ -96,14 +68,7 @@ function ShopMain() {
                 ].map((item) => <div key={item}>{item}</div>)} */}
             {/* </div> */}
             {/* <div className="catalogue-list-expandable"> */}
-            {category
-              ? (() => {
-                  if (Object.keys(subCategories).includes(category))
-                    return subCategories[category].map((item) => {
-                      return <>{item}</>;
-                    });
-                })()
-              : ""}
+
             <ExpandableItem
               setCategory={setCategory}
               title="Всё для татуировки"
@@ -116,7 +81,9 @@ function ShopMain() {
                 "Мыло и пенка",
                 "Тату машинки",
               ]}
+              subCategories={subCategories}
             />
+
             <ExpandableItem
               setCategory={setCategory}
               title="Всё для пирсинга"
@@ -125,6 +92,7 @@ function ShopMain() {
                 "Подставки под украшения",
                 "Украшения",
               ]}
+              subCategories={subCategories}
             />
             <ExpandableItem
               setCategory={setCategory}
@@ -151,32 +119,95 @@ function ShopMain() {
 
 export default ShopMain;
 
-// import React, { useState } from "react";
+// 'import React, { useState } from "react";
 
-// function ExpandableItem({ setCategory, title, contentArr }) {
-//   const [isOpen, setIsOpen] = useState(false);
+// const Category = ({ name, children, isOpen, onToggle }) => {
+//   return (
+//     <div>
+//       <div
+//         onClick={onToggle}
+//         style={{
+//           cursor: "pointer",
+//           padding: "10px",
+//           border: "1px solid #ccc",
+//           margin: "5px 0",
+//         }}
+//       >
+//         {name}
+//       </div>
+//       {isOpen && <div style={{ paddingLeft: "20px" }}>{children}</div>}
+//     </div>
+//   );
+// };
 
-//   const toggleExpand = () => {
-//     setIsOpen(!isOpen);
+// const NestedCategories = ({ categories }) => {
+//   const [openCategoryIndex, setOpenCategoryIndex] = useState(null);
+
+//   const handleToggle = (index) => {
+//     setOpenCategoryIndex(openCategoryIndex === index ? null : index);
 //   };
 
 //   return (
-//     <>
-//       <div className="expandable-item">
-//         <div className="expandable-header" onClick={toggleExpand}>
-//           <h3>{title}</h3>
-//           <span className={`expandable-icon ${isOpen ? "open" : ""}`}>▼</span>
-//         </div>
-//         <div className={`expandable-content ${isOpen ? "open" : ""}`}>
-//           {contentArr.map((item) => (
-//             <div key={item} onClick={() => setCategory(item)}>
-//               {item}
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </>
+//     <div>
+//       {categories.map((category, index) => (
+//         <Category
+//           key={index}
+//           name={category.name}
+//           isOpen={openCategoryIndex === index}
+//           onToggle={() => handleToggle(index)}
+//         >
+//           {category.subcategories && category.subcategories.length > 0 && (
+//             <NestedCategories categories={category.subcategories} />
+//           )}
+//         </Category>
+//       ))}
+//     </div>
 //   );
-// }
+// };
 
-// export default ExpandableItem;
+// const ShopMain = () => {
+//   const categoriesData = [
+//     {
+//       name: "Категория 1",
+//       subcategories: [
+//         { name: "Подкатегория 1.1" },
+//         {
+//           name: "Подкатегория 1.2",
+//           subcategories: [
+//             { name: "Подкатегория 1.2.1" },
+//             { name: "Подкатегория 1.2.2" },
+//           ],
+//         },
+//       ],
+//     },
+//     {
+//       name: "Категория 2",
+//       subcategories: [
+//         { name: "Подкатегория 2.1" },
+//         { name: "Подкатегория 2.2" },
+//       ],
+//     },
+//     {
+//       name: "Категория 3",
+//       subcategories: [
+//         { name: "Подкатегория 3.1" },
+//         {
+//           name: "Подкатегория 3.2",
+//           subcategories: [
+//             { name: "Подкатегория 3.2.1" },
+//             { name: "Подкатегория 3.2.2" },
+//           ],
+//         },
+//       ],
+//     },
+//   ];
+
+//   return (
+//     <div>
+//       <h1>Список категорий</h1>
+//       <NestedCategories categories={categoriesData} />
+//     </div>
+//   );
+// };
+
+// export default ShopMain;'
