@@ -11,11 +11,7 @@ import TableMast from "./components/TableMast";
 import Reviews from "./components/Reviews";
 import FAQ from "./components/FAQ";
 import Form from "./components/Form";
-<<<<<<< HEAD
 import ShopMain from "./components/ShopMainPage";
-=======
-
->>>>>>> b7eb51f4349be13c038629d40e58cf9acebdcf28
 
 export function MainPage() {
   return (
@@ -29,11 +25,7 @@ export function MainPage() {
       </main>
       <Footer />
     </>
-<<<<<<< HEAD
   );
-=======
-  )
->>>>>>> b7eb51f4349be13c038629d40e58cf9acebdcf28
 }
 
 export function StudioPage() {
@@ -46,11 +38,7 @@ export function StudioPage() {
       </main>
       <Footer />
     </>
-<<<<<<< HEAD
   );
-=======
-  )
->>>>>>> b7eb51f4349be13c038629d40e58cf9acebdcf28
 }
 
 export function MastersPage() {
@@ -62,11 +50,7 @@ export function MastersPage() {
       </main>
       <Footer />
     </>
-<<<<<<< HEAD
   );
-=======
-  )
->>>>>>> b7eb51f4349be13c038629d40e58cf9acebdcf28
 }
 
 export function ReviewsPage() {
@@ -78,11 +62,7 @@ export function ReviewsPage() {
       </main>
       <Footer />
     </>
-<<<<<<< HEAD
   );
-=======
-  )
->>>>>>> b7eb51f4349be13c038629d40e58cf9acebdcf28
 }
 
 export function FAQPage() {
@@ -94,11 +74,7 @@ export function FAQPage() {
       </main>
       <Footer />
     </>
-<<<<<<< HEAD
   );
-=======
-  )
->>>>>>> b7eb51f4349be13c038629d40e58cf9acebdcf28
 }
 
 export function FormPage() {
@@ -108,7 +84,6 @@ export function FormPage() {
         <Form />
       </main>
     </>
-<<<<<<< HEAD
   );
 }
 
@@ -123,7 +98,3 @@ export function ShopMainPage() {
     </>
   );
 }
-=======
-  )
-}
->>>>>>> b7eb51f4349be13c038629d40e58cf9acebdcf28
