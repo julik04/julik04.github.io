@@ -8,6 +8,7 @@ const ExpandableItem = ({
   setCategory,
   subCategories,
   selectedCategories,
+  setSubcategory,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -39,7 +40,15 @@ const ExpandableItem = ({
                 </div>
                 {/* check */}
                 {selectedCategories.includes(item)
-                  ? subCategories[item].map((subcat) => <div>{subcat}</div>)
+                  ? subCategories[item].map((subcat) => (
+                      <div
+                        onClick={() => {
+                          setSubcategory(subcat);
+                        }}
+                      >
+                        {subcat}
+                      </div>
+                    ))
                   : ""}
               </>
             );

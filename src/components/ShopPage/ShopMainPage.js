@@ -31,13 +31,80 @@ const Products = [
   { Название: "Опал 2", Цена: "1900", Изображение: productSRC },
 ];
 
+const Products1 = {
+  "Allegory Ink": [
+    {
+      Название: "Краска1 из подкатегории 1",
+      Цена: "1500",
+      Изображение: productSRC,
+    },
+    {
+      Название: "Краска2 из подкатегории 1",
+      Цена: "1900",
+      Изображение: productSRC,
+    },
+  ],
+  "Eternal Ink": [
+    {
+      Название: "Краска1 из подкатегории 2",
+      Цена: "1500",
+      Изображение: productSRC,
+    },
+    {
+      Название: "Краска2 из подкатегории 2",
+      Цена: "1900",
+      Изображение: productSRC,
+    },
+  ],
+  Intenze: [
+    {
+      Название: "Краска1 из подкатегории 3",
+      Цена: "1500",
+      Изображение: productSRC,
+    },
+    {
+      Название: "Краска2 из подкатегории 3",
+      Цена: "1900",
+      Изображение: productSRC,
+    },
+  ],
+  Nocturnal: [
+    {
+      Название: "Краска1 из подкатегории 4",
+      Цена: "1500",
+      Изображение: productSRC,
+    },
+    {
+      Название: "Краска2 из подкатегории 4",
+      Цена: "1900",
+      Изображение: productSRC,
+    },
+  ],
+  "World Famous": [
+    {
+      Название: "Краска1 из подкатегории 5",
+      Цена: "1500",
+      Изображение: productSRC,
+    },
+    {
+      Название: "Краска2 из подкатегории 5",
+      Цена: "1900",
+      Изображение: productSRC,
+    },
+  ],
+};
+
 function ShopMain() {
   // const goodsArr = { accessories: ["acc1", "acc2"], oils: ["oils1", "oils2"] };
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [path, setPath] = useState("Главная");
-  console.log(selectedCategories);
-  console.log(`${category} category`);
+  const [subcategory, setSubcategory] = useState("");
+  const [isSubcategory, setIsSubcategory] = useState(false);
+
+  // console.log(selectedCategories, "selectedCategories");
+  // console.log(`${category} category`);
+  // console.log("subcategory", subcategory);
 
   useEffect(() => {
     // check
@@ -46,17 +113,33 @@ function ShopMain() {
         if (!prev.includes(category)) {
           return [...prev, category];
         } else {
-          return [
-            ...prev.slice(0, prev.indexOf(category)),
-            ...prev.slice(prev.indexOf(category) + 1, prev.length),
-          ];
+          // return [
+
+          //   ...prev.slice(0, prev.indexOf(category)),
+          //   ...prev.slice(prev.indexOf(category) + 1, prev.length),
+          // ];
+          return prev.filter((cat) => cat !== category);
         }
       });
-      setPath(`Главная > ${category}`);
+      setPath(`Главная > ${category} `);
     } else {
       setPath("Главная"); // Если категория не выбрана, возвращаемся к главной
     }
   }, [category]);
+
+  useEffect(() => {
+    if (!isSubcategory) {
+      setPath((prev) => prev + ` > ${subcategory}`);
+      setIsSubcategory(true);
+    } else {
+      setPath(
+        (prev) => prev.split(">").slice(0, 2).join(">") + ` > ${subcategory}`
+      );
+    }
+    console.log("path", path);
+    console.log("subcategory", subcategory);
+    console.log("path.includes(subcategory)", path.includes(subcategory));
+  }, [subcategory]);
   // console.log("entries", Object.entries(subCategories));
   // console.log("values", Object.values(subCategories));
   // console.log("keys", Object.keys(subCategories));
@@ -93,6 +176,7 @@ function ShopMain() {
               ]}
               subCategories={subCategories}
               selectedCategories={selectedCategories}
+              setSubcategory={setSubcategory}
             />
 
             <ExpandableItem
@@ -113,15 +197,17 @@ function ShopMain() {
             />
           </div>
           <div className="goods">
-            {Products.map((item) => {
-              return (
-                <CardProduct
-                  title={item.Название}
-                  price={item.Цена}
-                  productSRC={item.Изображение}
-                />
-              );
-            })}
+            {subcategory
+              ? [subcategory].map((item) => {
+                  return (
+                    <CardProduct
+                      title={item.Название}
+                      price={item.Цена}
+                      productSRC={item.Изображение}
+                    />
+                  );
+                })
+              : "НЕТ ТОВАРОВ"}
           </div>
         </div>
       </div>

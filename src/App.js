@@ -11,7 +11,7 @@ import TableMast from "./components/TableMast";
 import Reviews from "./components/Reviews";
 import FAQ from "./components/FAQ";
 import Form from "./components/Form";
-import ShopMain from "./components/ShopMainPage";
+import ShopMain from "./components/ShopPage/ShopMainPage";
 
 export function MainPage() {
   return (
