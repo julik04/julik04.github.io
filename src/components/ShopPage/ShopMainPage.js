@@ -7,6 +7,7 @@ import CardProduct from "./CardProduct";
 //expandable with a list https://hlstore.ru/catalog/
 
 const subCategories = {
+  Популярное: [""],
   Аксессуары: ["111", "1221"],
   "Вазелин и масла": [""],
   "Всё для ухода и заживления": [""],
@@ -22,16 +23,14 @@ const subCategories = {
   "Тату машинки": [""],
 };
 
-const Products = [
-  {
-    Название: "Опал",
-    Цена: "1500",
-    Изображение: productSRC,
-  },
-  { Название: "Опал 2", Цена: "1900", Изображение: productSRC },
-];
-
-const Products1 = {
+const Products = {
+  Популярное: [
+    {
+      Название: "Популярное1",
+      Цена: "1500",
+      Изображение: productSRC,
+    },
+  ],
   "Allegory Ink": [
     {
       Название: "Краска1 из подкатегории 1",
@@ -95,11 +94,10 @@ const Products1 = {
 };
 
 function ShopMain() {
-  // const goodsArr = { accessories: ["acc1", "acc2"], oils: ["oils1", "oils2"] };
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [path, setPath] = useState("Главная");
-  const [subcategory, setSubcategory] = useState("");
+  const [subcategory, setSubcategory] = useState("Популярное");
   const [isSubcategory, setIsSubcategory] = useState(false);
 
   // console.log(selectedCategories, "selectedCategories");
@@ -136,14 +134,9 @@ function ShopMain() {
         (prev) => prev.split(">").slice(0, 2).join(">") + ` > ${subcategory}`
       );
     }
-    console.log("path", path);
-    console.log("subcategory", subcategory);
-    console.log("path.includes(subcategory)", path.includes(subcategory));
   }, [subcategory]);
-  // console.log("entries", Object.entries(subCategories));
-  // console.log("values", Object.values(subCategories));
-  // console.log("keys", Object.keys(subCategories));
-
+  // Получаем товары по выбранной подкатегории
+  const selectedProducts = Products[subcategory] || [];
   return (
     <>
       <div className="sub-header-container">
@@ -153,15 +146,6 @@ function ShopMain() {
       <div className="shop-container">
         <div className="catalogue">
           <div className="list">
-            {/* <div className="catalogue-list-expandable"> */}
-            {/* <ExpandableItem title="Всё для пирсинга" contentArr={} /> */}
-            {/* {category &&
-                goodsArr[
-                  category === "Аксессуары" ? "accessories" : "oils"
-                ].map((item) => <div key={item}>{item}</div>)} */}
-            {/* </div> */}
-            {/* <div className="catalogue-list-expandable"> */}
-
             <ExpandableItem
               setCategory={setCategory}
               title="Всё для татуировки"
@@ -196,9 +180,10 @@ function ShopMain() {
               contentArr={["Дезинфекция и стерилизация", "Лампы", "Расходники"]}
             />
           </div>
+
           <div className="goods">
-            {subcategory
-              ? [subcategory].map((item) => {
+            {selectedProducts
+              ? selectedProducts.map((item) => {
                   return (
                     <CardProduct
                       title={item.Название}
@@ -216,96 +201,3 @@ function ShopMain() {
 }
 
 export default ShopMain;
-
-// 'import React, { useState } from "react";
-
-// const Category = ({ name, children, isOpen, onToggle }) => {
-//   return (
-//     <div>
-//       <div
-//         onClick={onToggle}
-//         style={{
-//           cursor: "pointer",
-//           padding: "10px",
-//           border: "1px solid #ccc",
-//           margin: "5px 0",
-//         }}
-//       >
-//         {name}
-//       </div>
-//       {isOpen && <div style={{ paddingLeft: "20px" }}>{children}</div>}
-//     </div>
-//   );
-// };
-
-// const NestedCategories = ({ categories }) => {
-//   const [openCategoryIndex, setOpenCategoryIndex] = useState(null);
-
-//   const handleToggle = (index) => {
-//     setOpenCategoryIndex(openCategoryIndex === index ? null : index);
-//   };
-
-//   return (
-//     <div>
-//       {categories.map((category, index) => (
-//         <Category
-//           key={index}
-//           name={category.name}
-//           isOpen={openCategoryIndex === index}
-//           onToggle={() => handleToggle(index)}
-//         >
-//           {category.subcategories && category.subcategories.length > 0 && (
-//             <NestedCategories categories={category.subcategories} />
-//           )}
-//         </Category>
-//       ))}
-//     </div>
-//   );
-// };
-
-// const ShopMain = () => {
-//   const categoriesData = [
-//     {
-//       name: "Категория 1",
-//       subcategories: [
-//         { name: "Подкатегория 1.1" },
-//         {
-//           name: "Подкатегория 1.2",
-//           subcategories: [
-//             { name: "Подкатегория 1.2.1" },
-//             { name: "Подкатегория 1.2.2" },
-//           ],
-//         },
-//       ],
-//     },
-//     {
-//       name: "Категория 2",
-//       subcategories: [
-//         { name: "Подкатегория 2.1" },
-//         { name: "Подкатегория 2.2" },
-//       ],
-//     },
-//     {
-//       name: "Категория 3",
-//       subcategories: [
-//         { name: "Подкатегория 3.1" },
-//         {
-//           name: "Подкатегория 3.2",
-//           subcategories: [
-//             { name: "Подкатегория 3.2.1" },
-//             { name: "Подкатегория 3.2.2" },
-//           ],
-//         },
-//       ],
-//     },
-//   ];
-
-//   return (
-//     <div>
-//       <h1>Список категорий</h1>
-//       <NestedCategories categories={categoriesData} />
-//     </div>
-//   );
-// };
-
-// export default ShopMain;'
