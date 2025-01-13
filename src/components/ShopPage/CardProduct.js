@@ -4,7 +4,7 @@ function CardProduct({ title, price, productSRC }) {
       <img src={productSRC} alt={title} />
       <div class="content">
         <h2 class="title">{title}</h2>
-        <p class="price">{price}</p>
+        <p class="price">{price}₽ </p>
       </div>
     </div>
   );

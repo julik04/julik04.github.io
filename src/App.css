@@ -19,6 +19,9 @@ img {
 
 body {
   font-family: "Harmonia Sans Pro Cyr";
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -478,6 +481,7 @@ a {
 
 .footer {
   padding: 10px 0px 20px;
+  margin-top: auto;
   /* visual */
   color: var(--text-white);
   background-color: var(--text-darkgrey);
@@ -916,7 +920,7 @@ p {
   border-radius: 8px; /* Закругленные углы */
   overflow: hidden; /* Скрытие переполнения */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень */
-  margin: 20px; /* Отступы вокруг карточки */
+  margin: 20px;
   width: 270px; /* Ширина карточки */
   transition: transform 0.2s; /* Плавный эффект при наведении */
   display: flex;
@@ -940,7 +944,8 @@ p {
 }
 
 .card .title {
-  font-size: 18px; /* Размер шрифта названия */
+  line-height: normal;
+  font-size: 16px; /* Размер шрифта названия */
   font-weight: bold; /* Жирное начертание */
   margin: 0; /* Убираем отступы */
   color: var(--text-darkestgrey);
@@ -975,7 +980,7 @@ p {
 .catalogue {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: start;
 }
 
 .list {
