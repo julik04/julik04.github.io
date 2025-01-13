@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import productSRC from "../../assets/product-image.jpg";
 import productSRCAl1 from "../../assets/allegory1.jpg";
 import productSRCAl2 from "../../assets/allegory2.jpg";
@@ -34,11 +35,14 @@ import productSRCW8 from "../../assets/world8.jpg";
 import productSRCW9 from "../../assets/world9.jpg";
 import productSRCW10 from "../../assets/world10.jpg";
 import productSRCW11 from "../../assets/world11.jpg";
+
 import CategoryDisplay from "./CategoryDisplay";
 import ExpandableItem from "./ExpandableItem";
 import CardProduct from "./CardProduct";
 
 //expandable with a list https://hlstore.ru/catalog/
+//new file with constants
+//refactoring
 
 const subCategories = {
   Популярное: [""],
@@ -56,6 +60,22 @@ const subCategories = {
   "Мыло и пенка": [""],
   "Тату машинки": [""],
 };
+
+function getAllItemsByCategory(category) {
+  const items = [];
+
+  if (subCategories[category])
+    subCategories[category].map((subcategory) => {
+      return Products[subcategory].map((product) => {
+        items.push(product);
+      });
+    });
+  else {
+    console.log("Продуктов не найдено по category", category);
+  }
+
+  return items;
+}
 
 const Products = {
   Популярное: [
@@ -253,10 +273,25 @@ function ShopMain() {
   const [path, setPath] = useState("Главная");
   const [subcategory, setSubcategory] = useState("Популярное");
   const [isSubcategory, setIsSubcategory] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState([]);
 
+  // const selectedProducts = Products[subcategory] || [];
+
+  // Получаем товары по выбранной подкатегории
   // console.log(selectedCategories, "selectedCategories");
   // console.log(`${category} category`);
   // console.log("subcategory", subcategory);
+
+  console.log("subcategory", subcategory);
+
+  console.log(
+    "getAllItemsByCategory",
+    getAllItemsByCategory("Краска для татуировки")
+  );
+
+  useEffect(() => {
+    setSelectedProducts(Products[subcategory] || []);
+  }, [subcategory]);
 
   useEffect(() => {
     // check
@@ -289,13 +324,44 @@ function ShopMain() {
       );
     }
   }, [subcategory]);
-  // Получаем товары по выбранной подкатегории
-  const selectedProducts = Products[subcategory] || [];
+
   return (
     <>
       <div className="sub-header-container">
         <h1 className="sub-header">Каталог товаров</h1>
-        <p className="sub-header-path">{path}</p>
+        {/* <p className="sub-header-path">{path}</p> */}
+        {path.split(">").map((path) => {
+          return (
+            <p
+              onClick={() => {
+                console.log("path", path);
+                if (path === "Главная ") {
+                  setSubcategory("Популярное");
+                } else {
+                  // console.log("else", path === ` ${path} `);
+                  // console.log(
+                  //   "Object.keys(subCategories).includes(path)",
+                  //   // Object.keys(subCategories).includes(" " + path + " ")
+                  //   Object.keys(subCategories).some((key) => {
+                  //     console.log("key === path", key === path.trim());
+                  //     return key === path.trim();
+                  //   })
+                  // );
+                  if (
+                    Object.keys(subCategories).some((key) => {
+                      console.log("key === path", key === path.trim());
+                      return key === path.trim();
+                    })
+                  ) {
+                    setSelectedProducts(getAllItemsByCategory(path.trim()));
+                  }
+                }
+              }}
+            >
+              {path}
+            </p>
+          );
+        })}
       </div>
       <div className="shop-container">
         <div className="catalogue">

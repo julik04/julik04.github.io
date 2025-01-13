@@ -42,6 +42,7 @@ const ExpandableItem = ({
                 {selectedCategories.includes(item)
                   ? subCategories[item].map((subcat) => (
                       <div
+                        className="subcategories"
                         onClick={() => {
                           setSubcategory(subcat);
                         }}
