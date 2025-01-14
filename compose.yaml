@@ -1,12 +1,23 @@
 services:
   web:
-    build: .
+    image: node
+    restart: unless-stopped
     ports:
-      - "8000:5000"
-    develop:
-      watch:
-        - action: sync
-          path: .
-          target: /code
-  redis:
-    image: "redis:alpine"
+      - "3000:3000"
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["npm", "start"]
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.julik.rule=Host(`julik04.vesnin.site`)"
+      - "traefik.http.services.julik.loadbalancer.server.port=3000"
+      - "traefik.http.routers.julik.entrypoints=websecure"
+      - "traefik.http.routers.julik.tls=true"
+      - "traefik.http.routers.julik.tls.certresolver=le"
+    networks:
+      - traefik-net
+
+networks:
+  traefik-net:
+    external: true
