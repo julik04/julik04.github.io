@@ -6,13 +6,13 @@ function CategoryDisplay({ category, subCategories }) {
       return (
         <div>
           {items.map((item, index) => (
-            <p key={index}>{item}</p> // Используем индекс как ключ
+            <p key={index}>{item}</p>
           ))}
         </div>
       );
     }
   }
 
-  return null; // Если нет подкатегорий или категория не выбрана, ничего не отображаем
+  return null;
 }
 export default CategoryDisplay;

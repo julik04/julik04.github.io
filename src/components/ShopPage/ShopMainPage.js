@@ -77,7 +77,7 @@ function getAllItemsByCategory(category) {
   return items;
 }
 
-const Products = {
+export const Products = {
   Популярное: [
     {
       Название: "Популярное1",
@@ -278,16 +278,10 @@ function ShopMain() {
   // const selectedProducts = Products[subcategory] || [];
 
   // Получаем товары по выбранной подкатегории
-  // console.log(selectedCategories, "selectedCategories");
-  // console.log(`${category} category`);
-  // console.log("subcategory", subcategory);
-
+  console.log("selectedCategories", selectedCategories);
+  console.log("category", category);
   console.log("subcategory", subcategory);
-
-  console.log(
-    "getAllItemsByCategory",
-    getAllItemsByCategory("Краска для татуировки")
-  );
+  console.log("path", path);
 
   useEffect(() => {
     setSelectedProducts(Products[subcategory] || []);
@@ -334,26 +328,28 @@ function ShopMain() {
           return (
             <p
               onClick={() => {
-                console.log("path", path);
-                if (path === "Главная ") {
-                  setSubcategory("Популярное");
-                } else {
-                  // console.log("else", path === ` ${path} `);
-                  // console.log(
-                  //   "Object.keys(subCategories).includes(path)",
-                  //   // Object.keys(subCategories).includes(" " + path + " ")
-                  //   Object.keys(subCategories).some((key) => {
-                  //     console.log("key === path", key === path.trim());
-                  //     return key === path.trim();
-                  //   })
-                  // );
-                  if (
-                    Object.keys(subCategories).some((key) => {
-                      console.log("key === path", key === path.trim());
-                      return key === path.trim();
-                    })
-                  ) {
-                    setSelectedProducts(getAllItemsByCategory(path.trim()));
+                if (path.trim() !== "Популярное") {
+                  console.log("path", path);
+                  if (path === "Главная ") {
+                    setSubcategory("Популярное");
+                  } else {
+                    // console.log("else", path === ` ${path} `);
+                    // console.log(
+                    //   "Object.keys(subCategories).includes(path)",
+                    //   // Object.keys(subCategories).includes(" " + path + " ")
+                    //   Object.keys(subCategories).some((key) => {
+                    //     console.log("key === path", key === path.trim());
+                    //     return key === path.trim();
+                    //   })
+                    // );
+                    if (
+                      Object.keys(subCategories).some((key) => {
+                        console.log("key === path", key === path.trim());
+                        return key === path.trim();
+                      })
+                    ) {
+                      setSelectedProducts(getAllItemsByCategory(path.trim()));
+                    }
                   }
                 }
               }}
@@ -403,9 +399,11 @@ function ShopMain() {
 
           <div className="goods">
             {selectedProducts
-              ? selectedProducts.map((item) => {
+              ? selectedProducts.map((item, index) => {
                   return (
                     <CardProduct
+                      productSubcategory={subcategory}
+                      productIndex={index}
                       title={item.Название}
                       price={item.Цена}
                       productSRC={item.Изображение}

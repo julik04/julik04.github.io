@@ -1,6 +1,6 @@
-import First from "../assets/First.jpg";
-import Second from "../assets/Second.jpg";
-import Third from "../assets/Third.jpg";
+import First from "../assets/tattoist-slider.webp";
+import Second from "../assets/shop-slider.jpg";
+import Third from "../assets/man-slider.jpg";
 
 export default [
   {
@@ -20,4 +20,4 @@ export default [
     description: "сделай незабываемый подарок близкому человеку",
     urls: Third,
   },
-]
+];

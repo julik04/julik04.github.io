@@ -1,13 +1,13 @@
 import "./App.css";
-import Header from "./components/Header";
+import Header from "./components/Header-Footer/Header.js";
 import Slider from "./components/Slider";
 import Cont from "./components/Cont";
 import Prof from "./components/Prof";
 import Works from "./components/Works";
-import Footer from "./components/Footer";
+import Footer from "./components/Header-Footer/Footer.js";
 import AboutStudio from "./components/AboutStudio";
 import Workshop from "./components/Workshop";
-import TableMast from "./components/TableMast";
+import TableMast from "./components/Masters/TableMast.js";
 import Reviews from "./components/Reviews";
 import FAQ from "./components/FAQ";
 import Form from "./components/Form";

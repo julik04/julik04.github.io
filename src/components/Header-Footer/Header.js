@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import Form from "./Form.js";
+import Form from "../Form.js";
 import { useState } from "react";
-import "../App.css";
+import "../../App.css";
 
 function Header() {
   const [modalActive, setModalActive] = useState(false);
   return (
     <header className="header">
       <div className="upper-header container">
-        <div className="header-text-address">
+        <p className="header-text-address">
           Ул. 2-я Советская, 12 <br />
           Метро Восстания
-        </div>
+        </p>
         <div className="logo">
           <Link to="/">
             <svg

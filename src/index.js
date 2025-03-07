@@ -9,8 +9,10 @@ import {
   MastersPage,
   ShopMainPage,
 } from "./App";
+import { MasterPage } from "./components/Masters/MasterPage";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ProductPageTemplate from "./components/ShopPage/ProductPageTemplate";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
   {
     path: "/shopMain",
     element: <ShopMainPage />,
+  },
+  {
+    path: "/категория/:productSubcategory/:productIndex",
+    element: <ProductPageTemplate />,
+  },
+  {
+    path: "/artist/:artistIndex",
+    element: <MasterPage />,
   },
 ]);
 
