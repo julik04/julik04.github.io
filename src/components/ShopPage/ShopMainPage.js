@@ -80,7 +80,7 @@ function getAllItemsByCategory(category) {
 export const Products = {
   Популярное: [
     {
-      Название: "Популярное1",
+      Название: "Пирсинг",
       Цена: "1500",
       Изображение: productSRC,
     },
