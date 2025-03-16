@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Products } from "./ShopMainPage";
+import { Products } from "../Constants/Products";
 
 function ProductPageTemplate() {
   const navigate = useNavigate();

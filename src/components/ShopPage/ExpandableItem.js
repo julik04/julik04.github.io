@@ -1,61 +1,43 @@
-import React, { useState, useEffect } from "react";
-import CategoryDisplay from "./CategoryDisplay";
+import React from "react";
 
 // Компонент для расширяемого элемента
 const ExpandableItem = ({
   title,
   contentArr,
-  setCategory,
   subCategories,
-  selectedCategories,
-  setSubcategory,
+  selectedCategory,
+  selectedSubcategory,
+  onCategorySelect,
+  onSubcategorySelect,
+  isExpanded,
+  onToggle
 }) => {
-  const [expanded, setExpanded] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  console.log(selectedCategory);
-  const handleToggle = () => {
-    setExpanded(!expanded);
-  };
-
   return (
-    <>
-      <div className={`expandable-element ${expanded ? "expanded" : ""}`}>
-        <div onClick={handleToggle}>
-          <h3 className="expandable">{title}</h3>
-        </div>
-        {expanded &&
-          contentArr?.map((item) => {
-            return (
-              <>
-                <div key={item}>
-                  <p
-                    className="catalogue-list-expandable"
-                    onClick={() => {
-                      setCategory(item); // Устанавливаем выбранную категорию
-                      setSelectedCategory(item); // Устанавливаем локально выбранную категорию
-                    }}
-                  >
-                    {item}
-                  </p>
-                </div>
-                {/* check */}
-                {selectedCategories.includes(item)
-                  ? subCategories[item].map((subcat) => (
-                      <div
-                        className="subcategories"
-                        onClick={() => {
-                          setSubcategory(subcat);
-                        }}
-                      >
-                        {subcat}
-                      </div>
-                    ))
-                  : ""}
-              </>
-            );
-          })}
+    <div className={`expandable-element ${isExpanded ? "expanded" : ""}`}>
+      <div onClick={onToggle}>
+        <h3 className="expandable">{title}</h3>
       </div>
-    </>
+      {isExpanded && contentArr?.map((item) => (
+        <div key={item}>
+          <p
+            className={`catalogue-list-expandable ${selectedCategory === item ? 'selected' : ''}`}
+            onClick={() => onCategorySelect(item)}
+          >
+            {item}
+          </p>
+          {selectedCategory === item && subCategories[item]?.map((subcat) => (
+            <div
+              key={subcat}
+              className={`subcategories ${selectedSubcategory === subcat ? 'selected' : ''}`}
+              onClick={() => onSubcategorySelect(subcat)}
+            >
+              {subcat}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 };
+
 export default ExpandableItem;
