@@ -1,5 +1,6 @@
 /* eslint-disable default-case */
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 import ExpandableItem from "./ExpandableItem";
 import CardProduct from "./CardProduct";
@@ -139,6 +140,32 @@ function ShopMain() {
 
   return (
     <>
+      <Helmet>
+        <title>Каталог товаров | Татуировка и пирсинг</title>
+        <meta name="description" content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии." />
+        
+        {/* OpenGraph метатеги */}
+        <meta property="og:title" content="Каталог товаров | Татуировка и пирсинг" />
+        <meta property="og:description" content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:image" content="https://julik04.vesnin.site/assets/shop-slider.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Black Lotus Tattoo" />
+        <meta property="og:locale" content="ru_RU" />
+        
+        {/* Twitter Card метатеги */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Каталог товаров | Татуировка и пирсинг" />
+        <meta name="twitter:description" content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии." />
+        <meta name="twitter:image" content="https://julik04.vesnin.site/assets/shop-slider.jpg" />
+        
+        {/* Дополнительные метатеги */}
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={window.location.href} />
+      </Helmet>
+
       <div className="sub-header-container">
         <h1 className="sub-header">Каталог товаров</h1>
         <div className="breadcrumbs">
