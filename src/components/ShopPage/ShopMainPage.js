@@ -160,10 +160,45 @@ function ShopMain() {
         <meta name="twitter:title" content="Каталог товаров | Татуировка и пирсинг" />
         <meta name="twitter:description" content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии." />
         <meta name="twitter:image" content="https://julik04.vesnin.site/assets/shop-slider.jpg" />
-        
-        {/* Дополнительные метатеги */}
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={window.location.href} />
+
+        {/* Schema.org микроразметка */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Каталог товаров | Татуировка и пирсинг",
+            "description": "Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии.",
+            "url": window.location.href,
+            "image": "https://julik04.vesnin.site/assets/shop-slider.jpg",
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": path.map((item, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "name": item,
+                "item": index === path.length - 1 ? window.location.href : `https://julik04.vesnin.site/${path.slice(0, index + 1).join('/').toLowerCase()}`
+              }))
+            },
+            "mainEntity": {
+              "@type": "ProductList",
+              "numberOfItems": selectedProducts.length,
+              "itemListElement": selectedProducts.map((product, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                  "@type": "Product",
+                  "name": product.Название,
+                  "image": product.Изображение,
+                  "offers": {
+                    "@type": "Offer",
+                    "price": product.Цена,
+                    "priceCurrency": "RUB"
+                  }
+                }
+              }))
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="sub-header-container">
