@@ -13,6 +13,7 @@ import FAQ from "./components/FAQ";
 import Form from "./components/Form";
 import ShopMain from "./components/ShopPage/ShopMainPage";
 import TestIndex from "./components/TestIndex";
+import ProductSearch from "./components/ProductSearch.js";
 
 export function MainPage() {
   return (
@@ -94,6 +95,7 @@ export function ShopMainPage() {
     <>
       <Header />
       <main>
+        <ProductSearch />
         <ShopMain />
       </main>
       <Footer />

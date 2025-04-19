@@ -488,144 +488,170 @@ h5.black_lotus {
   height: 100vh;
   width: 100vw;
   position: fixed;
-  box-sizing: border-box;
-  padding: 20px;
-  width: 320px;
   top: 0;
   left: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.5s;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+  overflow-y: auto;
 }
 
 .form.active {
-  width: 100vw;
   opacity: 1;
   pointer-events: all;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .form_content {
-  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  padding: 30px;
   border-radius: 12px;
-  transform: scale(0.5);
-  transition: 0.4s all;
-  width: 50vw;
+  background-color: var(--text-white);
+  width: 400px;
+  max-width: 90vw;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .form_content.active {
-  transform: scale(1);
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.form_close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-darkpurple);
+  transition: color 0.3s ease;
+}
+
+.form_close:hover {
+  color: var(--text-purple);
+}
+
+.form_close::before,
+.form_close::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: currentColor;
+}
+
+.form_close::before {
+  transform: rotate(45deg);
+}
+
+.form_close::after {
+  transform: rotate(-45deg);
 }
 
 .title {
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 600;
-  margin-top: 30px;
+  margin-bottom: 20px;
   text-align: center;
+  color: var(--text-darkpurple);
 }
 
 .subtitle {
   font-size: 16px;
-  font-weight: 600;
-  margin-top: 10px;
+  color: var(--text-purple);
+  margin-bottom: 30px;
   text-align: center;
 }
 
 .input-container {
-  height: 50px;
   position: relative;
-  width: 100%;
-}
-
-.ic1 {
-  margin-top: 40px;
-}
-
-.ic2 {
-  margin-top: 30px;
-}
-
-.checkboxing {
-  text-align: left;
-}
-
-.ic3 {
-  margin: 30px 0 30px;
-  height: fit-content;
+  margin-bottom: 20px;
 }
 
 .input {
-  border-radius: 12px;
-  border: 0;
-  box-sizing: border-box;
-  font-size: 18px;
-  height: 100%;
-  outline: 0;
-  padding: 4px 20px 0;
   width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--text-lightpurple);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--text-darkpurple);
+  background-color: white;
+  transition: border-color 0.3s ease;
 }
 
-.cut {
-  border-radius: 10px;
-  height: 20px;
-  left: 20px;
-  position: absolute;
-  top: -20px;
-  transform: translateY(0);
-  transition: transform 200ms;
-  width: 110px;
-}
-
-.cut-short {
-  width: 50px;
-}
-
-.input:focus ~ .cut,
-.input:not(:placeholder-shown) ~ .cut {
-  transform: translateY(8px);
+.input:focus {
+  outline: none;
+  border-color: var(--text-purple);
 }
 
 .placeholder {
-  left: 20px;
-  pointer-events: none;
   position: absolute;
-  transform-origin: 0 50%;
-  transition: transform 200ms, color 200ms;
-  top: 20px;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-lightpurple);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  background-color: white;
+  padding: 0 5px;
 }
 
 .input:focus ~ .placeholder,
 .input:not(:placeholder-shown) ~ .placeholder {
-  transform: translateY(-30px) translateX(10px) scale(0.75);
+  top: 0;
+  font-size: 12px;
+  color: var(--text-purple);
 }
-
-/* .input:not(:placeholder-shown) ~ .placeholder {
-}
-
-.input:focus ~ .placeholder {
-} */
 
 .submit {
-  border-radius: 12px;
-  border: 0;
-  box-sizing: border-box;
-  cursor: pointer;
-  font-size: 18px;
-  height: 50px;
-  margin-top: 38px;
-  outline: 0;
-  text-align: center;
   width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--text-darkpurple);
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* .submit:active {
-} */
+.submit:hover {
+  background-color: var(--text-purple);
+}
+
+@media screen and (max-width: 480px) {
+  .form_content {
+    padding: 20px;
+    width: 90vw;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .input {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+}
 
 input {
   margin: 0.4rem;
@@ -1099,3 +1125,37 @@ p {
 }
 
 /* --- Остальные стили проекта ниже --- */
+
+/* Добавляем стили для мобильных устройств */
+@media screen and (max-height: 600px) {
+  .form {
+    align-items: flex-start;
+    padding: 20px 0;
+  }
+
+  .form_content {
+    position: relative;
+    margin: 20px auto;
+    transform: translate(-50%, 0) scale(0.5);
+  }
+
+  .form_content.active {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.input-error {
+  border-color: #ff4444 !important;
+}
+
+.error-message {
+  color: #ff4444;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.submit.submitting {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
