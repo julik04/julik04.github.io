@@ -41,7 +41,7 @@ const router = createBrowserRouter([
     element: <ShopMainPage />,
   },
   {
-    path: "/категория/:productSubcategory/:productIndex",
+    path: "/категория/:productInfo",
     element: <ProductPageTemplate />,
   },
   {

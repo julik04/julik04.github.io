@@ -337,24 +337,19 @@ a {
   flex-wrap: wrap;
 }
 
-.table_panel {
+/* .table_panel {
   width: fit-content;
   padding-bottom: 20px;
-}
+} */
 
-.table_names {
-  text-align: center;
-  font-size: 20px;
-}
-
-.table_images {
+/* .table_images {
   height: 30vh;
-}
+} */
 
-.table_images:hover {
+/* .table_images:hover {
   filter: brightness(80%);
   transition: 0.2s;
-}
+} */
 
 .name_name {
   font-size: 24px;
@@ -959,3 +954,148 @@ p {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 колонки одинаковой ширины */
 }
+/* ==========================
+   TableMast Section Styles (ИСПРАВЛЕНО)
+   ========================== */
+
+/* Optional: Add a common class for vertical padding if needed */
+.section-padding {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.masters_about {
+  background-color: var(--text-white);
+  color: var(--text-darkpurple);
+}
+
+.masters_heading {
+  margin-bottom: 15px;
+  color: var(--text-darkpurple);
+  /* Inherits global h1 styles */
+}
+
+.subheading_masters {
+  text-align: center;
+  font-size: 20px;
+  color: var(--text-purple);
+  margin-bottom: 40px;
+  padding: 0 10px;
+  font-weight: 300;
+}
+
+.table_panels {
+  display: grid;
+  /* Колонки: автоматически подбирать количество, мин. ширина 280px, макс. - равная доля */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px; /* Расстояние между панелями */
+  padding: 0 10px; /* Отступы сетки совпадают с контейнером */
+  /* Выравниваем сами элементы (панели) по центру внутри их ячеек сетки */
+  justify-items: center;
+}
+
+.table_panel {
+  background-color: var(--text-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(53, 47, 68, 0.1);
+  overflow: hidden; /* Обязательно для обрезки изображения и углов */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex; /* Используем flex для управления дочерними элементами */
+  flex-direction: column; /* Располагаем обертку картинки и контент вертикально */
+  width: 100%; /* Панель занимает всю ширину своей ячейки в сетке */
+  /* Optional: можно добавить max-width, если не хотите, чтобы панели становились слишком широкими */
+  /* max-width: 350px; */
+}
+
+/* Обертка для изображения - ГАРАНТИРУЕТ ОДИНАКОВЫЙ РАЗМЕР ОБЛАСТИ КАРТИНКИ */
+.table_panel_image_wrapper {
+  position: relative;
+  width: 100%; /* Занимает всю ширину родителя (.table_panel) */
+  /* Устанавливаем соотношение сторон (1:1 - квадрат, 4:3 и т.д.) */
+  aspect-ratio: 1 / 1; /* Делаем область для картинки квадратной */
+  overflow: hidden; /* Обрезаем все, что выходит за границы */
+  background-color: #eee; /* Необязательный фон-заглушка */
+}
+
+/* Само изображение */
+.table_images {
+  display: block; /* Убирает лишнее пространство под картинкой */
+  width: 100%; /* Растягиваем на всю ширину обертки */
+  height: 100%; /* Растягиваем на всю высоту обертки */
+  object-fit: cover; /* Масштабирует картинку, чтобы она ПОЛНОСТЬЮ покрыла обертку, сохраняя пропорции (может обрезать края) */
+  object-position: center center; /* Центрирует изображение при обрезке */
+  transition: transform 0.3s ease, filter 0.3s ease; /* Плавные переходы для hover */
+}
+
+/* Эффекты при наведении на всю панель */
+.table_panel:hover {
+  transform: translateY(-6px); /* Приподнимаем панель */
+  box-shadow: 0 8px 20px rgba(53, 47, 68, 0.15); /* Усиливаем тень */
+}
+
+.table_panel:hover .table_images {
+  filter: brightness(90%); /* Немного затемняем картинку */
+  transform: scale(1.05); /* Немного увеличиваем картинку */
+}
+
+/* Контейнер для текста под картинкой */
+.table_panel_content {
+  padding: 20px 15px;
+  flex-grow: 1; /* Позволяет блоку занять оставшееся место по высоте */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */ /* Закомментировано - текст будет выровнен по верху */
+}
+
+.name_name {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-darkpurple);
+  margin-bottom: 8px;
+  text-transform: none; /* Убираем uppercase, если он унаследован */
+}
+
+.experience_text {
+  font-size: 16px;
+  color: var(--text-purple);
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0; /* Убираем стандартные отступы параграфа */
+  text-align: center; /* Центрируем текст стажа */
+}
+
+/* --- Адаптивные стили (оставить как есть или адаптировать) --- */
+@media screen and (max-width: 768px) {
+  .table_panels {
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  .name_name {
+    font-size: 20px;
+  }
+  .experience_text {
+    font-size: 14px;
+  }
+  .section-padding {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .table_panels {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+  }
+  .subheading_masters {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  .table_panel_content {
+    padding: 15px 10px;
+  }
+}
+
+/* --- Остальные стили проекта ниже --- */

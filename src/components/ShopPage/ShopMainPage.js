@@ -142,61 +142,89 @@ function ShopMain() {
     <>
       <Helmet>
         <title>Каталог товаров | Татуировка и пирсинг</title>
-        <meta name="description" content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии." />
-        
+        <meta
+          name="description"
+          content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии."
+        />
+
         {/* OpenGraph метатеги */}
-        <meta property="og:title" content="Каталог товаров | Татуировка и пирсинг" />
-        <meta property="og:description" content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии." />
+        <meta
+          property="og:title"
+          content="Каталог товаров | Татуировка и пирсинг"
+        />
+        <meta
+          property="og:description"
+          content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии."
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={window.location.href} />
-        <meta property="og:image" content="https://julik04.vesnin.site/assets/shop-slider.jpg" />
+        <meta
+          property="og:image"
+          content="https://julik04.vesnin.site/assets/shop-slider.jpg"
+        />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="Black Lotus Tattoo" />
         <meta property="og:locale" content="ru_RU" />
-        
+
         {/* Twitter Card метатеги */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Каталог товаров | Татуировка и пирсинг" />
-        <meta name="twitter:description" content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии." />
-        <meta name="twitter:image" content="https://julik04.vesnin.site/assets/shop-slider.jpg" />
+        <meta
+          name="twitter:title"
+          content="Каталог товаров | Татуировка и пирсинг"
+        />
+        <meta
+          name="twitter:description"
+          content="Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии."
+        />
+        <meta
+          name="twitter:image"
+          content="https://julik04.vesnin.site/assets/shop-slider.jpg"
+        />
 
         {/* Schema.org микроразметка */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Каталог товаров | Татуировка и пирсинг",
-            "description": "Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии.",
-            "url": window.location.href,
-            "image": "https://julik04.vesnin.site/assets/shop-slider.jpg",
-            "breadcrumb": {
+            name: "Каталог товаров | Татуировка и пирсинг",
+            description:
+              "Каталог товаров для татуировки и пирсинга. Найдите все необходимое для вашей студии.",
+            url: window.location.href,
+            image: "https://julik04.vesnin.site/assets/shop-slider.jpg",
+            breadcrumb: {
               "@type": "BreadcrumbList",
-              "itemListElement": path.map((item, index) => ({
+              itemListElement: path.map((item, index) => ({
                 "@type": "ListItem",
-                "position": index + 1,
-                "name": item,
-                "item": index === path.length - 1 ? window.location.href : `https://julik04.vesnin.site/${path.slice(0, index + 1).join('/').toLowerCase()}`
-              }))
+                position: index + 1,
+                name: item,
+                item:
+                  index === path.length - 1
+                    ? window.location.href
+                    : `https://julik04.vesnin.site/${path
+                        .slice(0, index + 1)
+                        .join("/")
+                        .toLowerCase()}`,
+              })),
             },
-            "mainEntity": {
+            mainEntity: {
               "@type": "ProductList",
-              "numberOfItems": selectedProducts.length,
-              "itemListElement": selectedProducts.map((product, index) => ({
+              numberOfItems: selectedProducts.length,
+              itemListElement: selectedProducts.map((product, index) => ({
                 "@type": "ListItem",
-                "position": index + 1,
-                "item": {
+                position: index + 1,
+                item: {
                   "@type": "Product",
-                  "name": product.Название,
-                  "image": product.Изображение,
-                  "offers": {
+                  name: product.Название,
+                  image: product.Изображение,
+                  offers: {
                     "@type": "Offer",
-                    "price": product.Цена,
-                    "priceCurrency": "RUB"
-                  }
-                }
-              }))
-            }
+                    price: product.Цена,
+                    priceCurrency: "RUB",
+                  },
+                },
+              })),
+            },
           })}
         </script>
       </Helmet>
@@ -280,16 +308,20 @@ function ShopMain() {
 
           <div className="goods">
             {selectedProducts.length > 0 ? (
-              selectedProducts.map((item, index) => (
-                <CardProduct
-                  key={index}
-                  productSubcategory={selectedSubcategory}
-                  productIndex={index}
-                  title={item.Название}
-                  price={item.Цена}
-                  productSRC={item.Изображение}
-                />
-              ))
+              selectedProducts.map((item, index) => {
+                // console.log(`item ${index}`, item);
+                return (
+                  <CardProduct
+                    key={index}
+                    productInfo={JSON.stringify(item)}
+                    productSubcategory={selectedSubcategory}
+                    productIndex={index}
+                    title={item.Название}
+                    price={item.Цена}
+                    productSRC={item.Изображение}
+                  />
+                );
+              })
             ) : (
               <div className="empty-state">Нет товаров в этой категории</div>
             )}

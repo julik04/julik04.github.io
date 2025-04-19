@@ -4,17 +4,28 @@ function CardProduct({
   title,
   price,
   productSRC,
-  productIndex,
-  productSubcategory,
+  productInfo,
+  // productIndex,
+  // productSubcategory,
 }) {
   const navigate = useNavigate();
+
+  function pretifyUrl(url) {
+    return url.replace(/\//g, "*");
+  }
+
+  console.log("pretifyUrl(productInfo)", pretifyUrl(productInfo));
+
+  // console.log("productInfo prop inside CardProduct", productInfo);
+  // JSON.parse(productInfo)
 
   return (
     // <a href={`/категория/подкатегория/${productId}`}>
     <div
       className="card"
       onClick={() => {
-        navigate(`/категория/${productSubcategory}/${productIndex}`);
+        // navigate(`/категория/${productSubcategory}/${productIndex}`);
+        navigate(`/категория/${pretifyUrl(productInfo)}`);
       }}
     >
       <img src={productSRC} alt={title} />
