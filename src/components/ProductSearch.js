@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Products } from "./Constants/Products"; // <-- Укажи правильный путь к файлу с Products
 import CardProduct from "./ShopPage/CardProduct";
+import { SERVER_LOCATION } from "./Constants/Server";
 
 // Вспомогательная функция для получения плоского списка всех товаров
 const getAllProducts = (productsData) => {
@@ -63,9 +64,23 @@ const styles = {
 
 const ProductSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [products, setProducts] = useState([]);
 
   // Получаем плоский список всех товаров один раз
-  const allProducts = useMemo(() => getAllProducts(Products), []);
+  const allProducts = useMemo(() => getAllProducts(products), [products]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/products", {
+      method: "GET",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log({ data });
+        setProducts(data.data.Products);
+      });
+  }, []);
 
   // Фильтруем товары на основе поискового запроса
   // useMemo кэширует результат, пока searchTerm или allProducts не изменятся
@@ -106,7 +121,7 @@ const ProductSearch = () => {
                 productSubcategory={"категория"}
                 productIndex={index}
                 title={product.Название}
-                productSRC={product.Изображение}
+                productSRC={SERVER_LOCATION + product.Изображение}
               />
             ))
           ) : (

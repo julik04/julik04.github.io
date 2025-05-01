@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { SERVER_LOCATION } from "../Constants/Server";
 
 function CardProduct({
   title,
@@ -9,14 +10,13 @@ function CardProduct({
   // productSubcategory,
 }) {
   const navigate = useNavigate();
-
   function pretifyUrl(url) {
     return url.replace(/\//g, "*");
   }
 
   console.log("pretifyUrl(productInfo)", pretifyUrl(productInfo));
 
-  // console.log("productInfo prop inside CardProduct", productInfo);
+  console.log("productInfo prop inside CardProduct", productInfo);
   // JSON.parse(productInfo)
 
   return (

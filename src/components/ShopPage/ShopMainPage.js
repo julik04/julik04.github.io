@@ -4,7 +4,8 @@ import { Helmet } from "react-helmet-async";
 
 import ExpandableItem from "./ExpandableItem";
 import CardProduct from "./CardProduct";
-import { Products } from "../Constants/Products";
+// import { Products } from "../Constants/Products";
+import { SERVER_LOCATION } from "../Constants/Server";
 
 const subCategories = {
   Популярное: [""],
@@ -23,7 +24,7 @@ const subCategories = {
   "Тату машинки": [""],
 };
 
-function getAllItemsByCategory(category) {
+function getAllItemsByCategory(category, Products) {
   const items = [];
   if (subCategories[category]) {
     subCategories[category].forEach((subcategory) => {
@@ -41,10 +42,24 @@ function ShopMain() {
   const [selectedSubcategory, setSelectedSubcategory] = useState("Популярное");
   const [path, setPath] = useState(["Главная"]);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [Products, setProducts] = useState([]);
 
   console.log("selectedCategory", selectedCategory);
   console.log("selectedSubcategory", selectedSubcategory);
   console.log("path", path);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/products", {
+      method: "GET",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log({ data });
+        setProducts(data.data.Products);
+      });
+  }, []);
 
   // Handle category expansion
   const handleCategoryExpand = (title) => {
@@ -128,7 +143,10 @@ function ShopMain() {
   useEffect(() => {
     if (selectedSubcategory === "Популярное") {
       if (selectedCategory) {
-        const categoryProducts = getAllItemsByCategory(selectedCategory);
+        const categoryProducts = getAllItemsByCategory(
+          selectedCategory,
+          Products
+        );
         setSelectedProducts(categoryProducts);
       } else {
         setSelectedProducts(Products["Популярное"] || []);
@@ -318,7 +336,7 @@ function ShopMain() {
                     productIndex={index}
                     title={item.Название}
                     price={item.Цена}
-                    productSRC={item.Изображение}
+                    productSRC={SERVER_LOCATION + item.Изображение}
                   />
                 );
               })

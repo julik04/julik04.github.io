@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 import Form from "../Form.js";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "../../App.css";
 
 function Header() {
@@ -47,6 +47,23 @@ function Header() {
           </a>
           <button className="book-btn" onClick={() => setModalActive(true)}>
             Записаться
+          </button>
+          <button
+            className="book-btn"
+            onClick={async () => {
+              try {
+                const res = await (
+                  await fetch("http://localhost:8080/products", {
+                    method: "GET",
+                  })
+                ).json();
+                console.log({ res });
+              } catch (error) {
+                console.log("error happened", { error });
+              }
+            }}
+          >
+            Логин
           </button>
           <Link to="/shopMain">Магазин</Link>
         </div>
