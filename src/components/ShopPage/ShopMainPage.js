@@ -49,7 +49,7 @@ function ShopMain() {
   console.log("path", path);
 
   useEffect(() => {
-    fetch("http://localhost:8080/products", {
+    fetch(`${SERVER_LOCATION}/products`, {
       method: "GET",
     })
       .then((res) => {
