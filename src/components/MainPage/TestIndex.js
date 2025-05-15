@@ -1,10 +1,10 @@
-import "../App.css";
+import "../../App.css";
 import { useState, useCallback } from "react";
 import {
   QUIZ_QUESTIONS,
   COST_RANGES,
   DISCLAIMER_TEXT,
-} from "./Constants/Questions.js";
+} from "../Constants/Questions.js";
 
 // function TextIndex() {
 //   return <div className="container"></div>;

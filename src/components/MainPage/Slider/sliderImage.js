@@ -1,6 +1,6 @@
-import First from "../assets/tattoist-slider.webp";
-import Second from "../assets/shop-slider.jpg";
-import Third from "../assets/man-slider.jpg";
+import First from "../../../assets/tattoist-slider.webp";
+import Second from "../../../assets/shop-slider.jpg";
+import Third from "../../../assets/man-slider.jpg";
 
 export default [
   {

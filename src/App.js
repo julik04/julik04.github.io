@@ -1,9 +1,9 @@
 import "./App.css";
 import Header from "./components/Header-Footer/Header.js";
-import Slider from "./components/Slider";
-import Cont from "./components/Cont";
-import Prof from "./components/Prof";
-import Works from "./components/Works";
+import Slider from "./components/MainPage/Slider/Slider.js";
+import Cont from "./components/MainPage/Cont.js";
+import Prof from "./components/MainPage/Prof.js";
+import Works from "./components/MainPage/Works.js";
 import Footer from "./components/Header-Footer/Footer.js";
 import AboutStudio from "./components/AboutStudio";
 import Workshop from "./components/Workshop";
@@ -12,8 +12,8 @@ import Reviews from "./components/Reviews";
 import FAQ from "./components/FAQ";
 import Form from "./components/Form";
 import ShopMain from "./components/ShopPage/ShopMainPage";
-import TestIndex from "./components/TestIndex";
-import ProductSearch from "./components/ProductSearch.js";
+import TestIndex from "./components/MainPage/TestIndex";
+import ProductSearch from "./components/ShopPage/ProductSearch.js";
 
 export function MainPage() {
   return (

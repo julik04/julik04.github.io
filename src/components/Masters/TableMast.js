@@ -6,7 +6,7 @@ import { SERVER_LOCATION } from "../Constants/Server";
 
 function TableMast() {
   const navigate = useNavigate();
-  const [mastersArray, setMastersArray] = useState([]);
+  const [masteraArray, setMasteraArray] = useState([]);
 
   useEffect(() => {
     fetch(`${SERVER_LOCATION}/masters`, {
@@ -17,11 +17,11 @@ function TableMast() {
       })
       .then((data) => {
         console.log({ data });
-        setMastersArray(data.data.Masters);
+        setMasteraArray(data.data.Masters);
       });
   }, []);
 
-  console.log({ mastersArray });
+  console.log({ masteraArray });
 
   // Ensure mastersArray is defined and is an array
   // if (!Array.isArray(mastersArray)) {
@@ -33,30 +33,25 @@ function TableMast() {
     // Added a common section class if you want consistent vertical padding/backgrounds
     <section className="masters_about section-padding">
       {" "}
-      {/* Added common section padding class */}
       <div className="container">
         <h1 className="masters_heading">Мастера студии</h1>
         <p className="subheading_masters">
           Опытные мастера. Креативное мышление.
         </p>
-        {/* Changed to grid for potentially better alignment and spacing control */}
         <div className="table_panels">
           {mastersArray?.map((master, index) => (
-            // Added key prop, crucial for lists in React
             <div
               key={index}
               className="table_panel"
               onClick={() => navigate(`/artist/${index}`)}
-              role="button" // Added role for accessibility
-              tabIndex="0" // Added tabIndex for keyboard navigation
+              role="button"
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ")
                   navigate(`/artist/${index}`);
-              }} // Keyboard accessibility
+              }}
             >
               <div className="table_panel_image_wrapper">
                 {" "}
-                {/* Wrapper for image styling */}
                 <img
                   src={master.image}
                   // More descriptive alt text is good practice

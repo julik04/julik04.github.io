@@ -1,5 +1,5 @@
 import mas1 from "../../assets/img-1.jpg";
-import mas2 from "../../assets/img-2.jpg";
+import mas2 from "../../assets/img-2.png";
 import mas3 from "../../assets/img-3.jpg";
 import mas4 from "../../assets/img-4.jpg";
 import mas5 from "../../assets/img-5.jpg";

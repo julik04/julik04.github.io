@@ -4,6 +4,7 @@
   --text-darkpurple: #352f44;
   --text-purple: #5c5470;
   --text-lightpurple: #b9b4c7;
+  --back-pink: #e2dfe7;
 }
 
 * {
@@ -965,6 +966,7 @@ p {
 
 .catalogue-list-expandable:hover {
   transition: 0.3s;
+  background-color: var(--back-pink);
 }
 
 .expandable {
@@ -975,10 +977,30 @@ p {
   border-style: solid;
   cursor: pointer;
 }
+.expandable:hover {
+  background-color: var(--back-pink);
+}
 
+.subcategories {
+  cursor: pointer;
+  width: 230px;
+  gap: 0px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  opacity: 0px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 200;
+  padding: 10px 20px;
+  text-align: left;
+}
+.subcategories:hover {
+  background-color: var(--back-pink);
+}
 .goods {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 колонки одинаковой ширины */
+  margin: 40px 20px;
 }
 /* ==========================
    TableMast Section Styles (ИСПРАВЛЕНО)

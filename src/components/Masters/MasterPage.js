@@ -1,25 +1,28 @@
 import { useParams } from "react-router-dom";
-import { mastersPageInfo } from "../Constants/Masters";
 import { useState, useEffect } from "react";
 import { SERVER_LOCATION } from "../Constants/Server";
 
 export function MasterPage() {
   const { artistIndex } = useParams();
   // const MASTER_INFO = mastersPageInfo[artistIndex];
-  const [masterInfo, setMasterInfo] = useState([]);
+  const [masterInfo, setMasterInfo] = useState({});
 
   useEffect(() => {
-    fetch(`${SERVER_LOCATION}/masters`, {
+    fetch(`${SERVER_LOCATION}/masters/${artistIndex}`, {
       method: "GET",
     })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
+        const parsedData = {
+          ...data,
+          gallery: data.gallery ? JSON.parse(data.gallery) : [],
+        };
         console.log({ data });
-        setMasterInfo(data.data.MasterInfo[artistIndex]);
+        setMasterInfo(parsedData);
       });
-  }, []);
+  }, [artistIndex]);
 
   //   console.log("mastersPageInfo", mastersPageInfo[artistIndex]);
 
@@ -27,8 +30,8 @@ export function MasterPage() {
     <>
       <div>Resume: {masterInfo.resume}</div>
       <div>
-        {masterInfo.gallery?.map((src) => (
-          <img src={src} alt="" />
+        {masterInfo.gallery?.map((imgSrc, index) => (
+          <img key={index} src={imgSrc} alt={`Gallery image ${index}`} />
         ))}
       </div>
     </>

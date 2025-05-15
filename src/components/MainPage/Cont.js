@@ -1,7 +1,7 @@
-import "../App.css";
-import home_shop01 from "../assets/home_shop01.svg";
-import home_shop02 from "../assets/home_shop02.svg";
-import home_shop03 from "../assets/home_shop03.svg";
+import "../../App.css";
+import home_shop01 from "../../assets/home_shop01.svg";
+import home_shop02 from "../../assets/home_shop02.svg";
+import home_shop03 from "../../assets/home_shop03.svg";
 
 function Cont() {
   return (
