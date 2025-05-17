@@ -59,4 +59,17 @@ export const mastersPageInfo = [
     resume: "Резюме Фар Куада: ляляляляя",
     gallery: [mas2, mas2, mas2, mas2],
   },
+
+  {
+    resume: "Марио Марьев",
+    gallery: [mas3, mas3, mas3, mas3],
+  },
+  {
+    resume: "Петр Котов",
+    gallery: [mas4, mas4, mas4, mas4],
+  },
+  {
+    resume: "Жанна Жабова",
+    gallery: [mas5, mas5, mas5, mas5],
+  },
 ];
