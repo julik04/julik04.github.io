@@ -72,4 +72,16 @@ export const mastersPageInfo = [
     resume: "Жанна Жабова",
     gallery: [mas5, mas5, mas5, mas5],
   },
+  {
+    resume: "Шрек Шмеков",
+    gallery: [mas6, mas6, mas6, mas6],
+  },
+  {
+    resume: "Ривай Титанов",
+    gallery: [mas7, mas7, mas7, mas7],
+  },
+  {
+    resume: "Сейлор Мун",
+    gallery: [mas8, mas8, mas8, mas8],
+  },
 ];

@@ -54,7 +54,6 @@ function TableMast() {
                 {" "}
                 <img
                   src={master.image}
-                  // More descriptive alt text is good practice
                   alt={`Мастер ${master.name}`}
                   className="table_images"
                 />
