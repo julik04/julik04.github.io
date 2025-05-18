@@ -14,19 +14,23 @@ import Form from "./components/Form";
 import ShopMain from "./components/ShopPage/ShopMainPage";
 import TestIndex from "./components/MainPage/TestIndex";
 import ProductSearch from "./components/ShopPage/ProductSearch.js";
+import Login from "./components/Login/Login.js";
+import { AuthProvider, useAuth } from "./components/AuthContext.js";
 
 export function MainPage() {
   return (
     <>
-      <Header />
-      <main>
-        <TestIndex />
-        <Cont />
-        <Slider />
-        <Prof />
-        <Works />
-      </main>
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <main>
+          <TestIndex />
+          <Cont />
+          <Slider />
+          <Prof />
+          <Works />
+        </main>
+        <Footer />
+      </AuthProvider>
     </>
   );
 }
@@ -34,12 +38,14 @@ export function MainPage() {
 export function StudioPage() {
   return (
     <>
-      <Header />
-      <main>
-        <AboutStudio />
-        <Workshop />
-      </main>
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <main>
+          <AboutStudio />
+          <Workshop />
+        </main>
+        <Footer />
+      </AuthProvider>
     </>
   );
 }
@@ -47,11 +53,13 @@ export function StudioPage() {
 export function MastersPage() {
   return (
     <>
-      <Header />
-      <main>
-        <TableMast />
-      </main>
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <main>
+          <TableMast />
+        </main>
+        <Footer />
+      </AuthProvider>
     </>
   );
 }
@@ -59,11 +67,13 @@ export function MastersPage() {
 export function ReviewsPage() {
   return (
     <>
-      <Header />
-      <main>
-        <Reviews />
-      </main>
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <main>
+          <Reviews />
+        </main>
+        <Footer />
+      </AuthProvider>
     </>
   );
 }
@@ -71,11 +81,13 @@ export function ReviewsPage() {
 export function FAQPage() {
   return (
     <>
-      <Header />
-      <main>
-        <FAQ />
-      </main>
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <main>
+          <FAQ />
+        </main>
+        <Footer />
+      </AuthProvider>
     </>
   );
 }
@@ -83,9 +95,11 @@ export function FAQPage() {
 export function FormPage() {
   return (
     <>
-      <main>
-        <Form />
-      </main>
+      <AuthProvider>
+        <main>
+          <Form />
+        </main>
+      </AuthProvider>
     </>
   );
 }
@@ -93,12 +107,27 @@ export function FormPage() {
 export function ShopMainPage() {
   return (
     <>
-      <Header />
-      <main>
-        <ProductSearch />
-        <ShopMain />
-      </main>
-      <Footer />
+      <AuthProvider>
+        <Header />
+        <main>
+          <ProductSearch />
+          <ShopMain />
+        </main>
+        <Footer />
+      </AuthProvider>
+    </>
+  );
+}
+export function LoginPage() {
+  return (
+    <>
+      <AuthProvider>
+        <Header />
+        <main>
+          <Login />
+        </main>
+        <Footer />
+      </AuthProvider>
     </>
   );
 }

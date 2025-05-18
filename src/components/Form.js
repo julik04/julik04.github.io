@@ -1,14 +1,16 @@
 import "../App.css";
 import React, { useState } from "react";
+import { useAuth } from "./AuthContext";
+import { useEffect } from "react";
 
 const Form = ({ active, setActive }) => {
+  // const context = useAuth();
   const [formData, setFormData] = useState({
-    name: "",
+    name: (JSON.parse(sessionStorage.getItem("user")) || {}).username || "",
     phone: "",
     date: "",
     comment: "",
   });
-
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -96,6 +98,7 @@ const Form = ({ active, setActive }) => {
             <input
               type="text"
               name="name"
+              // defaultValue={context.username}
               className={`input ${errors.name ? "input-error" : ""}`}
               placeholder=" "
               value={formData.name}

@@ -2,15 +2,21 @@ import { json, Link } from "react-router-dom";
 import Form from "../Form.js";
 import { useCallback, useState } from "react";
 import "../../App.css";
+import { useAuth } from "../AuthContext.js";
 
 function Header() {
   const [modalActive, setModalActive] = useState(false);
+  const context = useAuth();
+
+  console.log({ context });
   return (
     <header className="header">
       <div className="upper-header container">
         <p className="header-text-address">
           Ул. 2-я Советская, 12 <br />
-          Метро Восстания
+          Метро Восстания <br />
+          <br />
+          <Link to="/login">Вход</Link>
         </p>
         <div className="logo">
           <Link to="/">
@@ -47,23 +53,6 @@ function Header() {
           </a>
           <button className="book-btn" onClick={() => setModalActive(true)}>
             Записаться
-          </button>
-          <button
-            className="book-btn"
-            onClick={async () => {
-              try {
-                const res = await (
-                  await fetch("http://localhost:8080/products", {
-                    method: "GET",
-                  })
-                ).json();
-                console.log({ res });
-              } catch (error) {
-                console.log("error happened", { error });
-              }
-            }}
-          >
-            Логин
           </button>
           <Link to="/shopMain">Магазин</Link>
         </div>

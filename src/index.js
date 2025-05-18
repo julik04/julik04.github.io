@@ -9,6 +9,7 @@ import {
   FAQPage,
   MastersPage,
   ShopMainPage,
+  LoginPage,
 } from "./App";
 import { MasterPage } from "./components/Masters/MasterPage";
 import reportWebVitals from "./reportWebVitals";
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/artist/:artistIndex",
     element: <MasterPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
 ]);
 
