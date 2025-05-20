@@ -1,16 +1,11 @@
 import "../../App.css";
+import "../../assets/styles/TestIndex.css";
 import { useState, useCallback } from "react";
 import {
   QUIZ_QUESTIONS,
   COST_RANGES,
   DISCLAIMER_TEXT,
 } from "../Constants/Questions.js";
-
-// function TextIndex() {
-//   return <div className="container"></div>;
-// }
-
-// export default TextIndex;
 
 export default function TattooCostEstimator() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -68,7 +63,7 @@ export default function TattooCostEstimator() {
 
   return (
     <div className="tattoo-estimator">
-      <h1>Калькулятор стоимости тату (Примерно)</h1>
+      <h1>Калькулятор стоимости тату (Примерный)</h1>
 
       {!showResult ? (
         <>
@@ -88,13 +83,12 @@ export default function TattooCostEstimator() {
                 Назад
               </button>
             )}
-            {/* Можно добавить кнопку "Далее", если убрать автопереход */}
           </div>
         </>
       ) : (
         <Result
           costRange={calculateCostRange(totalPoints)}
-          totalPoints={totalPoints} // Можно показать баллы для отладки или интереса
+          totalPoints={totalPoints}
           disclaimer={DISCLAIMER_TEXT}
           onRestart={handleRestart}
         />
@@ -113,7 +107,7 @@ const Question = ({ question, onAnswerSelect, selectedPoints }) => {
       <div className="options-container">
         {question.options.map((option) => (
           <button
-            key={option.text} // Используем текст как ключ (убедитесь в уникальности) или добавьте id к опциям
+            key={option.text}
             className={`option-button ${
               selectedPoints === option.points ? "selected" : ""
             }`}

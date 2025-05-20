@@ -66,7 +66,7 @@ const Login = () => {
             // sessionStorage.removeItem("user");
           }}
         >
-          Log Out
+          Выйти
         </button>
       </div>
     );

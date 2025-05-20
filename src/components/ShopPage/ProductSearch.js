@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import CardProduct from "./CardProduct";
 import { SERVER_LOCATION } from "../Constants/Server";
-// import "./ProductSearch.css";
+import "../../assets/styles/ProductSearch.css";
 
 // Вспомогательная функция для получения плоского списка всех товаров
 const getAllProducts = (productsData) => {
@@ -52,7 +52,7 @@ const ProductSearch = () => {
         placeholder="Введите название товара..."
         value={searchTerm}
         onChange={handleInputChange}
-        className="input"
+        className="input-productSearch"
       />
 
       {/* Показываем результаты только если есть ввод */}

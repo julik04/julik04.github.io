@@ -885,7 +885,7 @@ p {
 }
 
 .card {
-  border: 1px solid #ddd; /* Граница карточки */
+  border: 1px solid var(--back-pink); /* Граница карточки */
   border-radius: 8px; /* Закругленные углы */
   overflow: hidden; /* Скрытие переполнения */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень */
@@ -1013,7 +1013,7 @@ p {
 }
 
 .masters_about {
-  background-color: var(--text-white);
+  background-color: var(--back-pink);
   color: var(--text-darkpurple);
 }
 
@@ -1064,7 +1064,7 @@ p {
   /* Устанавливаем соотношение сторон (1:1 - квадрат, 4:3 и т.д.) */
   aspect-ratio: 1 / 1; /* Делаем область для картинки квадратной */
   overflow: hidden; /* Обрезаем все, что выходит за границы */
-  background-color: #eee; /* Необязательный фон-заглушка */
+  background-color: var(--back-pink); /* Необязательный фон-заглушка */
 }
 
 /* Само изображение */
@@ -1094,6 +1094,7 @@ p {
   flex-grow: 1; /* Позволяет блоку занять оставшееся место по высоте */
   display: flex;
   flex-direction: column;
+  background-color: var(--back-pink);
   /* justify-content: center; */ /* Закомментировано - текст будет выровнен по верху */
 }
 
@@ -1167,11 +1168,11 @@ p {
 }
 
 .input-error {
-  border-color: #ff4444 !important;
+  border-color: var(--back-pink) !important;
 }
 
 .error-message {
-  color: #ff4444;
+  color: var(--text-darkpurple);
   font-size: 12px;
   margin-top: 4px;
   display: block;

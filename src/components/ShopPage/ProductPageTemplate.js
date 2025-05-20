@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Products } from "../Constants/Products";
-import "./ProductPageTemplate.css";
+import "../../assets/styles/ProductPageTemplate.css";
 import { SERVER_LOCATION } from "../Constants/Server";
 
 function ProductPageTemplate() {

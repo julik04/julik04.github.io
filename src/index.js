@@ -10,6 +10,8 @@ import {
   MastersPage,
   ShopMainPage,
   LoginPage,
+  GraphicSitemapPage,
+  TextSitemapPage,
 } from "./App";
 import { MasterPage } from "./components/Masters/MasterPage";
 import reportWebVitals from "./reportWebVitals";
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/sitemap/graphic",
+    element: <GraphicSitemapPage />,
+  },
+  {
+    path: "/sitemap/text",
+    element: <TextSitemapPage />,
   },
 ]);
 

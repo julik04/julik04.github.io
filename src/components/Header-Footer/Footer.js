@@ -1,4 +1,5 @@
 import "../../App.css";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -25,6 +26,11 @@ function Footer() {
           </div>
         </div>
         <small className="copyright">COPYRIGHT 2024 © ВСЕ ПРАВА ЗАЩИЩЕНЫ</small>
+        <br />
+        <Link to="/sitemap/graphic">
+          Графическая карта сайта{" / "}
+          <Link to="/sitemap/text">Текстовая карта сайта</Link>
+        </Link>
       </div>
     </footer>
   );

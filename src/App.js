@@ -16,6 +16,8 @@ import TestIndex from "./components/MainPage/TestIndex";
 import ProductSearch from "./components/ShopPage/ProductSearch.js";
 import Login from "./components/Login/Login.js";
 import { AuthProvider, useAuth } from "./components/AuthContext.js";
+import GraphicSitemap from "./components/GraphicSitemap.js";
+import TextSitemap from "./components/TextSitemap.js";
 
 export function MainPage() {
   return (
@@ -125,6 +127,32 @@ export function LoginPage() {
         <Header />
         <main>
           <Login />
+        </main>
+        <Footer />
+      </AuthProvider>
+    </>
+  );
+}
+export function GraphicSitemapPage() {
+  return (
+    <>
+      <AuthProvider>
+        <Header />
+        <main>
+          <GraphicSitemap />
+        </main>
+        <Footer />
+      </AuthProvider>
+    </>
+  );
+}
+export function TextSitemapPage() {
+  return (
+    <>
+      <AuthProvider>
+        <Header />
+        <main>
+          <TextSitemap />
         </main>
         <Footer />
       </AuthProvider>
