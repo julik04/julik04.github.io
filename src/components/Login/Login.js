@@ -15,7 +15,7 @@ const Login = () => {
     setError("");
 
     if (!username || !password) {
-      setError("Please fill in all fields");
+      setError("Заполните все поля");
       return;
     }
 
@@ -75,11 +75,11 @@ const Login = () => {
   return (
     <div className="container">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        <h2>Вход</h2>
         {error && <div className="error-message">{error}</div>}
 
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="username">Логин:</label>
           <input
             type="text"
             id="username"
@@ -90,7 +90,7 @@ const Login = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Пароль:</label>
           <input
             type="password"
             id="password"
@@ -101,7 +101,7 @@ const Login = () => {
         </div>
 
         <button type="submit" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
+          {isLoading ? "Входим..." : "Войти"}
         </button>
       </form>
     </div>

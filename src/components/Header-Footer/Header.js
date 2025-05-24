@@ -6,7 +6,12 @@ import { useAuth } from "../AuthContext.js";
 
 function Header() {
   const [modalActive, setModalActive] = useState(false);
+  const [mobileMenuActive, setMobileMenuActive] = useState(false);
   const context = useAuth();
+
+  const toggleMobileMenu = () => {
+    setMobileMenuActive(!mobileMenuActive);
+  };
 
   console.log({ context });
   return (
@@ -56,6 +61,14 @@ function Header() {
           </button>
           <Link to="/shopMain">Магазин</Link>
         </div>
+        <div
+          className={`burger-menu ${mobileMenuActive ? "active" : ""}`}
+          onClick={toggleMobileMenu}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
         <Form active={modalActive} setActive={setModalActive} />
       </div>
       <nav className="lower-header">
@@ -63,6 +76,30 @@ function Header() {
         <Link to="/masters">Мастера</Link>
         <Link to="/reviews">Отзывы</Link>
         <Link to="/faq">FAQ</Link>
+      </nav>
+      <nav className={`mobile-nav ${mobileMenuActive ? "active" : ""}`}>
+        <Link to="/studio" onClick={toggleMobileMenu}>
+          Студия
+        </Link>
+        <br />
+        <Link to="/masters" onClick={toggleMobileMenu}>
+          Мастера
+        </Link>
+        <br />
+
+        <Link to="/reviews" onClick={toggleMobileMenu}>
+          Отзывы
+        </Link>
+        <br />
+
+        <Link to="/faq" onClick={toggleMobileMenu}>
+          FAQ
+        </Link>
+        <br />
+
+        <Link to="/shopMain" onClick={toggleMobileMenu}>
+          Магазин
+        </Link>
       </nav>
     </header>
   );
