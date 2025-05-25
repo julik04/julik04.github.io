@@ -1,5 +1,6 @@
 // AuthContext.js
 import { createContext, useContext, useState, useEffect } from "react";
+import { SERVER_LOCATION, GET_USER } from "./Constants/Server";
 
 const AuthContext = createContext();
 
@@ -19,13 +20,39 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (username, token) => {
-    const userData = {
-      username,
-      token,
-    };
+    // const { data } = await fetch(SERVER_LOCATION + GET_USER + `/${username}`, {
+    //   method: "GET",
+    // });
 
-    setUser(userData);
-    sessionStorage.setItem("user", JSON.stringify(userData));
+    // console.log({ login });
+
+    // const userData = {
+    //   username,
+    //   token,
+    //   phone_number: data.User.phone_number,
+    // };
+
+    // setUser(userData);
+    // sessionStorage.setItem("user", JSON.stringify(userData));
+
+    fetch(SERVER_LOCATION + GET_USER + `/${username}`, {
+      method: "GET",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log({ data });
+        const userData = {
+          username,
+          token,
+          phone_number: data.data.User.phone_number,
+        };
+
+        console.log({ userData });
+        setUser(userData);
+        sessionStorage.setItem("user", JSON.stringify(userData));
+      });
   };
 
   const logout = () => {

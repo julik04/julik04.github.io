@@ -17,6 +17,7 @@ import { MasterPage } from "./components/Masters/MasterPage";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductPageTemplate from "./components/ShopPage/ProductPageTemplate";
+import { AdminPanel } from "./components/Admin/AdminPanel";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
   {
     path: "/sitemap/text",
     element: <TextSitemapPage />,
+  },
+  {
+    path: "/admin",
+    element: <AdminPanel />,
   },
 ]);
 

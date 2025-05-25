@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { LOGIN_PATH, SERVER_LOCATION } from "../Constants/Server";
 import { useAuth } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const context = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +41,10 @@ const Login = () => {
 
       if (data.message === "Success!") {
         setIsLoggedIn(true);
+        console.log({ role: data.role });
+        if (data.role === "admin") {
+          navigate("/admin");
+        }
         // sessionStorage.setItem(
         //   "user",
         //   JSON.stringify({ token: data.acessToken, username: data.login })
