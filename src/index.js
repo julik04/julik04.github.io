@@ -18,6 +18,8 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductPageTemplate from "./components/ShopPage/ProductPageTemplate";
 import { AdminPanel } from "./components/Admin/AdminPanel";
+import { Orders } from "./components/Admin/Orders/Orders";
+import { Products } from "./components/Admin/Products/Products";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +69,18 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <AdminPanel />,
+  },
+  {
+    path: "/admin/orders",
+    element: <Orders />,
+  },
+  {
+    path: "/admin/products",
+    element: <Products />,
+  },
+  {
+    path: "/admin/products/create",
+    element: <Products />,
   },
 ]);
 

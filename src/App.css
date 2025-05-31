@@ -267,7 +267,7 @@ a {
 /* Адаптивные стили */
 @media screen and (max-width: 1440px) {
   .skills_skills {
-    right: 50px;
+    right: 10px;
     max-width: 700px;
   }
 
@@ -426,10 +426,12 @@ a {
   font-size: 40px;
 }
 
-/* about_studio */
-
 /* .about_studio {
 } */
+
+.about_studio {
+  background-color: var(--back-pink);
+}
 
 .about_heading {
   text-align: center;
@@ -486,6 +488,8 @@ a {
 
 .sovet {
   padding: 30px 0px 0px;
+  background-color: var(--text-darkpurple);
+  color: var(--text-white);
 }
 
 /* tablemast */
@@ -838,7 +842,7 @@ input {
   }
 
   .skills_skills {
-    right: 50px;
+    right: 10px;
   }
 
   .images_panels {
@@ -1251,7 +1255,7 @@ input {
   .book-btn {
     width: 80px;
     padding: 4px 8px;
-    font-size: 10px;
+    font-size: 8px;
   }
 
   .lower-header > a {
@@ -1756,7 +1760,6 @@ input {
   border-radius: var(--border-radius);
   background-color: var(--text-purple);
   color: var(--text-white);
-  font-size: 16px;
   cursor: pointer;
   transition: all var(--transition-speed) ease;
 }

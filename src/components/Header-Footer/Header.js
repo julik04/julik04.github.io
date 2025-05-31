@@ -59,7 +59,9 @@ function Header() {
           <button className="book-btn" onClick={() => setModalActive(true)}>
             Записаться
           </button>
-          <Link to="/shopMain">Магазин</Link>
+          <Link className="header-text-address" to="/shopMain">
+            Магазин
+          </Link>
         </div>
         <div
           className={`burger-menu ${mobileMenuActive ? "active" : ""}`}
