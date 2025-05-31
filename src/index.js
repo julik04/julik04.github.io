@@ -19,12 +19,21 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductPageTemplate from "./components/ShopPage/ProductPageTemplate";
 import { AdminPanel } from "./components/Admin/AdminPanel";
 import { Orders } from "./components/Admin/Orders/Orders";
-import { Products } from "./components/Admin/Products/Products";
+import Products from "./components/Admin/Products/Products";
+import SignUpPage from "./components/SignUp/SignUp";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainPage />,
+  },
+  {
+    path: "/signup",
+    element: <SignUpPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
   {
     path: "/studio",
@@ -55,10 +64,6 @@ const router = createBrowserRouter([
     element: <MasterPage />,
   },
   {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
     path: "/sitemap/graphic",
     element: <GraphicSitemapPage />,
   },
@@ -78,10 +83,10 @@ const router = createBrowserRouter([
     path: "/admin/products",
     element: <Products />,
   },
-  {
-    path: "/admin/products/create",
-    element: <Products />,
-  },
+  // {
+  //   path: "/admin/products/create",
+  //   element: <Products />,
+  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

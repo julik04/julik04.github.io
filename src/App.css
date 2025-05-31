@@ -1911,3 +1911,69 @@ input {
     margin: 12px 0;
   }
 }
+
+/* Password field container */
+.password-field {
+  position: relative;
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+}
+
+.password-input-container input {
+  flex: 1;
+  padding-right: 40px; /* Space for the button */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #777;
+  padding: 5px;
+  font-size: 1.2rem;
+}
+
+.password-toggle:hover {
+  color: #333;
+}
+
+/* Error styling */
+.error-input {
+  border-color: #ff3860 !important;
+}
+
+.error {
+  color: #ff3860;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 3px;
+}
+
+/* Alert messages */
+.alert {
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.alert.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
