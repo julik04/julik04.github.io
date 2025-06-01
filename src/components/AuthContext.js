@@ -47,6 +47,7 @@ export function AuthProvider({ children }) {
           username,
           token,
           phone_number: data.data.User.phone_number,
+          id: data.data.User.id,
         };
 
         console.log({ userData });

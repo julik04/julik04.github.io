@@ -21,6 +21,7 @@ import { AdminPanel } from "./components/Admin/AdminPanel";
 import { Orders } from "./components/Admin/Orders/Orders";
 import Products from "./components/Admin/Products/Products";
 import SignUpPage from "./components/SignUp/SignUp";
+import UserOrders from "./components/User/UserOrders";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/products",
     element: <Products />,
+  },
+  {
+    path: "/user/orders",
+    element: <UserOrders />,
   },
   // {
   //   path: "/admin/products/create",

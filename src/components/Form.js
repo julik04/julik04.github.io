@@ -1,40 +1,27 @@
-import "../App.css";
 import React, { useState } from "react";
-import { useAuth } from "./AuthContext";
-import { useEffect } from "react";
+import { SERVER_LOCATION, ORDERS } from "./Constants/Server";
 
-const Form = ({ active, setActive }) => {
-  // const context = useAuth();
+const OrderForm = ({ active, setActive, onOrderCreated }) => {
   const [formData, setFormData] = useState({
-    name: (JSON.parse(sessionStorage.getItem("user")) || {}).username || "",
-    phone: "",
-    date: "",
+    order_date: "",
     comment: "",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [serverMessage, setServerMessage] = useState(null);
+
+  // Get user ID from sessionStorage
+  const getUserData = () => {
+    const userData = JSON.parse(sessionStorage.getItem("user"));
+    return userData || {};
+  };
 
   const validateField = (name, value) => {
     switch (name) {
-      case "name":
-        if (!value.trim()) return "Имя обязательно для заполнения";
-        if (value.length < 2) return "Имя должно содержать минимум 2 символа";
-        return "";
-      case "phone":
-        if (!value.trim()) return "Телефон обязателен для заполнения";
-        if (
-          !/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(
-            value
-          )
-        ) {
-          return "Введите корректный номер телефона";
-        }
-        return "";
-      case "date":
-        if (!value.trim()) return "Дата обязательна для заполнения";
+      case "order_date":
+        if (!value.trim()) return "Date is required";
         const selectedDate = new Date(value);
-        const today = new Date();
-        if (selectedDate < today) return "Дата не может быть в прошлом";
+        if (selectedDate < new Date()) return "Date cannot be in the past";
         return "";
       default:
         return "";
@@ -55,11 +42,12 @@ const Form = ({ active, setActive }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setServerMessage(null);
 
-    // Валидация всех полей
+    // Validate fields
     const newErrors = {};
     Object.keys(formData).forEach((key) => {
       const error = validateField(key, formData[key]);
@@ -68,88 +56,104 @@ const Form = ({ active, setActive }) => {
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      // Здесь можно добавить отправку данных на сервер
-      alert("Спасибо! Мы свяжемся с вами в ближайшее время.");
-      setActive(false);
-      setFormData({
-        name: "",
-        phone: "",
-        date: "",
-        comment: "",
-      });
+    if (Object.keys(newErrors).length > 0) {
+      setIsSubmitting(false);
+      return;
     }
 
-    setIsSubmitting(false);
+    try {
+      const userData = getUserData();
+      if (!userData.id) {
+        throw new Error("User session expired. Please log in again.");
+      }
+
+      const response = await fetch(`${SERVER_LOCATION}${ORDERS}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Include authorization token if needed
+          // "Authorization": `Bearer ${userData.token}`
+        },
+        body: JSON.stringify({
+          user_id: userData.id,
+          order_date: formData.order_date,
+          comment: formData.comment,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.data?.message || "Failed to create order");
+      }
+
+      // Success handling
+      setServerMessage({
+        type: "success",
+        text: "Order created successfully!",
+      });
+
+      // Reset form
+      setFormData({
+        order_date: "",
+        comment: "",
+      });
+
+      // Notify parent component about new order
+      if (onOrderCreated) {
+        onOrderCreated(result.data.Order);
+      }
+
+      // Close form after delay
+      setTimeout(() => setActive(false), 1500);
+    } catch (err) {
+      setServerMessage({ type: "error", text: err.message });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  if (!active) return null;
 
   return (
     <div className={`form ${active ? "active" : ""}`}>
       <div className={`form_content ${active ? "active" : ""}`}>
-        <button
-          className="form_close"
-          onClick={() => setActive(false)}
-        ></button>
-        <h2 className="title">Записаться на сеанс</h2>
-        <p className="subtitle">Заполните форму, и мы свяжемся с вами</p>
+        <button className="form_close" onClick={() => setActive(false)}>
+          ×
+        </button>
+        <h2 className="title">Create New Order</h2>
+
+        {serverMessage && (
+          <div className={`server-message ${serverMessage.type}`}>
+            {serverMessage.text}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="input-container">
             <input
-              type="text"
-              name="name"
-              // defaultValue={context.username}
-              className={`input ${errors.name ? "input-error" : ""}`}
-              placeholder=" "
-              value={formData.name}
+              type="datetime-local"
+              name="order_date"
+              className={`input ${errors.order_date ? "input-error" : ""}`}
+              value={formData.order_date}
               onChange={handleChange}
             />
-            <span className="placeholder">Ваше имя</span>
-            {errors.name && (
-              <span className="error-message">{errors.name}</span>
+            <span className="placeholder">Order Date & Time</span>
+            {errors.order_date && (
+              <span className="error-message">{errors.order_date}</span>
             )}
           </div>
 
           <div className="input-container">
-            <input
-              type="tel"
-              name="phone"
-              className={`input ${errors.phone ? "input-error" : ""}`}
-              placeholder=" "
-              value={formData.phone}
-              onChange={handleChange}
-            />
-            <span className="placeholder">Номер телефона</span>
-            {errors.phone && (
-              <span className="error-message">{errors.phone}</span>
-            )}
-          </div>
-
-          <div className="input-container">
-            <input
-              type="date"
-              name="date"
-              className={`input ${errors.date ? "input-error" : ""}`}
-              placeholder=" "
-              value={formData.date}
-              onChange={handleChange}
-            />
-            <span className="placeholder">Желаемая дата</span>
-            {errors.date && (
-              <span className="error-message">{errors.date}</span>
-            )}
-          </div>
-
-          <div className="input-container">
-            <input
-              type="text"
+            <textarea
               name="comment"
               className="input"
               placeholder=" "
               value={formData.comment}
               onChange={handleChange}
+              rows="3"
             />
-            <span className="placeholder">Комментарий</span>
+            <span className="placeholder">Comments (optional)</span>
           </div>
 
           <button
@@ -157,7 +161,7 @@ const Form = ({ active, setActive }) => {
             className={`submit ${isSubmitting ? "submitting" : ""}`}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Отправка..." : "Отправить"}
+            {isSubmitting ? "Creating Order..." : "Create Order"}
           </button>
         </form>
       </div>
@@ -165,4 +169,4 @@ const Form = ({ active, setActive }) => {
   );
 };
 
-export default Form;
+export default OrderForm;

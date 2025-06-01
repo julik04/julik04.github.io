@@ -24,15 +24,41 @@ const SignUp = () => {
     message: "",
   });
 
+  const formatPhoneNumber = (value) => {
+    // Remove all non-digit characters
+    const digits = value.replace(/\D/g, "").substring(0, 11);
+
+    // Format based on digit count
+    if (digits.length === 0) return "";
+    if (digits.length <= 1) return digits;
+    if (digits.length <= 4) return `${digits[0]} (${digits.substring(1)}`;
+    if (digits.length <= 7) {
+      return `${digits[0]} (${digits.substring(1, 4)}) ${digits.substring(4)}`;
+    }
+    return `${digits[0]} (${digits.substring(1, 4)}) ${digits.substring(
+      4,
+      7
+    )}-${digits.substring(7, 9)}-${digits.substring(9, 11)}`;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    let newValue = value;
+
+    // Apply phone number formatting
+    if (name === "phone_number") {
+      newValue = formatPhoneNumber(value);
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
 
     // Clear field error when user types
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
+
+  const phoneDigitsCount = formData.phone_number.replace(/\D/g, "").length;
 
   const validate = () => {
     const newErrors = {};
@@ -84,7 +110,7 @@ const SignUp = () => {
 
     // Birth date validation
     const dateRegex =
-      /((20)[0-9]{2}[-](0[13578]|1[02])[-](0[1-9]|[12][0-9]|3[01]))|((20)[0-9]{2}[-](0[469]|11)[-](0[1-9]|[12][0-9]|30))|((20)[0-9]{2}[-](02)[-](0[1-9]|1[0-9]|2[0-8]))|((((20)(04|08|[2468][048]|[13579][26]))|2000)[-](02)[-]29)/;
+      /^((19|20)\d{2}-(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(19|20)\d{2}-(0[469]|11)-(0[1-9]|[12][0-9]|30)|(19|20)\d{2}-02-(0[1-9]|1[0-9]|2[0-8])|(19(0[48]|[2468][048]|[13579][26])|20(0[48]|[2468][048]|[13579][26]))-02-29)$/;
     if (!formData.birth_date) {
       newErrors.birth_date = "Birth date is required";
     } else if (!dateRegex.test(formData.birth_date)) {
@@ -160,8 +186,11 @@ const SignUp = () => {
             onChange={handleChange}
             className={errors.login ? "error-input" : ""}
           />
-          {errors.login && <span className="error">{errors.login}</span>}
-          <div className="hint">4-14 chars, must contain a number</div>
+          {errors.login ? (
+            <span className="error">{errors.login}</span>
+          ) : (
+            <div className="hint">4-14 chars, must contain a number</div>
+          )}
         </div>
 
         {/* Password Field */}
@@ -185,13 +214,13 @@ const SignUp = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-          {errors.password && <span className="error">{errors.password}</span>}
-          <div className="hint">
-            At least 7 characters with 1 uppercase letter and 1 number
-          </div>
-          <div className="character-count">
-            {formData.password.length}/255 characters
-          </div>
+          {errors.password ? (
+            <span className="error">{errors.password}</span>
+          ) : (
+            <div className="hint">
+              At least 7 characters with 1 uppercase letter and 1 number
+            </div>
+          )}
         </div>
 
         {/* Repeat Password */}
@@ -220,9 +249,6 @@ const SignUp = () => {
           {errors.repeatPassword && (
             <span className="error">{errors.repeatPassword}</span>
           )}
-          <div className="character-count">
-            {formData.repeatPassword.length}/255 characters
-          </div>
         </div>
 
         {/* Full Name */}
@@ -239,9 +265,6 @@ const SignUp = () => {
           {errors.full_name && (
             <span className="error">{errors.full_name}</span>
           )}
-          <div className="character-count">
-            {formData.full_name.length}/255 characters
-          </div>
         </div>
 
         {/* Phone Number */}
@@ -252,13 +275,15 @@ const SignUp = () => {
             name="phone_number"
             value={formData.phone_number}
             onChange={handleChange}
-            placeholder="8-917-324-21-21"
+            placeholder="8 (917) 324-21-21"
             className={errors.phone_number ? "error-input" : ""}
+            maxLength={19}
           />
-          {errors.phone_number && (
+          {errors.phone_number ? (
             <span className="error">{errors.phone_number}</span>
+          ) : (
+            <div className="hint">Russian phone format: 8 (XXX) XXX-XX-XX</div>
           )}
-          <div className="hint">Russian phone format</div>
         </div>
 
         {/* Birth Date */}
@@ -271,10 +296,11 @@ const SignUp = () => {
             onChange={handleChange}
             className={errors.birth_date ? "error-input" : ""}
           />
-          {errors.birth_date && (
+          {errors.birth_date ? (
             <span className="error">{errors.birth_date}</span>
+          ) : (
+            <div className="hint">Format: YYYY-MM-DD</div>
           )}
-          <div className="hint">Format: YYYY-MM-DD</div>
         </div>
 
         <button type="submit" className="submit-btn">
