@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
+import "../App.css";
 
-const UserIcon = () => {
+const UserIcon = ({ setModalActive }) => {
   const [initials, setInitials] = useState("");
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
@@ -38,14 +39,14 @@ const UserIcon = () => {
       // Generate background color based on user ID
       if (userData.id) {
         const colors = [
-          "#4e73df",
-          "#1cc88a",
-          "#36b9cc",
-          "#f6c23e",
-          "#e74a3b",
-          "#6f42c1",
-          "#fd7e14",
-          "#20c997",
+          "#C9ADA7",
+          "#9A8C98",
+          "#4A4E69",
+          "#22223B",
+          "#cbc0d3",
+          "#ffcad4",
+          "#5C5470",
+          "#352F44",
         ];
         setBackgroundColor(colors[userData.id % colors.length]);
       }
@@ -122,7 +123,7 @@ const UserIcon = () => {
                 marginBottom: 4,
               }}
             >
-              You have registered as:
+              Вы зарегистрированы как:
             </div>
             <div
               style={{
@@ -131,6 +132,7 @@ const UserIcon = () => {
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                color: "var(--text-black)",
               }}
             >
               {fullName}
@@ -142,7 +144,7 @@ const UserIcon = () => {
                 marginTop: 4,
               }}
             >
-              Username: {username}
+              Логин: {username}
             </div>
           </div>
 
@@ -173,7 +175,36 @@ const UserIcon = () => {
                 <path d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
                 <path d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
               </svg>
-              Log Out
+              Выйти
+            </button>
+            <button
+              style={{
+                width: "100%",
+                textAlign: "left",
+                padding: "0.5rem 1rem",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                color: "#4e73df",
+                fontWeight: 500,
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                borderTop: "1px solid #eee",
+              }}
+              onClick={() => setModalActive(true)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+              </svg>
+              Записаться
             </button>
           </div>
         </div>

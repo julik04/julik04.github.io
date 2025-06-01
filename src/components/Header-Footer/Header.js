@@ -3,6 +3,7 @@ import Form from "../Form.js";
 import { useCallback, useState } from "react";
 import "../../App.css";
 import { useAuth } from "../AuthContext.js";
+import UserIcon from "../UserAccountIcon.js";
 
 function Header() {
   const [modalActive, setModalActive] = useState(false);
@@ -20,8 +21,6 @@ function Header() {
         <p className="header-text-address">
           Ул. 2-я Советская, 12 <br />
           Метро Восстания <br />
-          <br />
-          <Link to="/login">Вход</Link>
         </p>
         <div className="logo">
           <Link to="/">
@@ -56,12 +55,15 @@ function Header() {
           <a className="telefon" href="tel:+7(888)777-75-55">
             +7 (888) 777-75-55
           </a>
-          <button className="book-btn" onClick={() => setModalActive(true)}>
-            Записаться
-          </button>
-          <Link className="header-text-address" to="/shopMain">
+          {/* <Link className="header-text-address" to="/shopMain">
             Магазин
-          </Link>
+          </Link> */}{" "}
+          <br />
+          {sessionStorage.getItem("user") ? (
+            <UserIcon setModalActive={setModalActive} />
+          ) : (
+            <Link to="/login">Вход</Link>
+          )}
         </div>
         <div
           className={`burger-menu ${mobileMenuActive ? "active" : ""}`}

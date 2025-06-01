@@ -19,13 +19,13 @@ import { AuthProvider, useAuth } from "./components/AuthContext.js";
 import GraphicSitemap from "./components/GraphicSitemap.js";
 import TextSitemap from "./components/TextSitemap.js";
 import UserIcon from "./components/UserAccountIcon.js";
+import Banner from "./components/Banner.js";
 
 export function MainPage() {
   return (
     <>
       <AuthProvider>
         <Header />
-        <UserIcon />
         <main>
           <TestIndex />
           <Cont />
@@ -45,6 +45,7 @@ export function StudioPage() {
       <AuthProvider>
         <Header />
         <main>
+          <Banner />
           <AboutStudio />
           <Workshop />
         </main>

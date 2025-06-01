@@ -27,7 +27,6 @@ const SignUp = () => {
   const formatPhoneNumber = (value) => {
     // Remove all non-digit characters
     const digits = value.replace(/\D/g, "").substring(0, 11);
-
     // Format based on digit count
     if (digits.length === 0) return "";
     if (digits.length <= 1) return digits;
@@ -65,56 +64,71 @@ const SignUp = () => {
 
     // Login validation
     if (!formData.login) {
-      newErrors.login = "Login is required";
+      newErrors.login = "Требуется логин";
     } else if (!/^(?=.*\d)[a-zA-Z0-9]{4,14}$/.test(formData.login)) {
       newErrors.login =
-        "Must be 4-14 alphanumeric characters with at least 1 number";
+        "Логин должен содержать 4-14 латинских букв и минимум 1 цифру";
     } else if (formData.login.length <= 6 || formData.login.length >= 255) {
-      newErrors.login = "Must be between 7-254 characters";
+      newErrors.login =
+        "Логин должен содержать минимум 7 символов и максимум - 255";
     }
 
     // Password validation - UPDATED LENGTH TO 255
     if (!formData.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = "Требуется пароль";
     } else if (
       !/^(?=.*\d)(?=.*[A-Z])[a-zA-Z0-9]{7,}$/.test(formData.password)
     ) {
       newErrors.password =
-        "At least 7 characters with 1 uppercase letter and 1 number";
-    } else if (formData.password.length > 254) {
-      newErrors.password = "Password cannot exceed 254 characters";
+        "Пароль должен содержать 7 латинских букв, минимум 1 прописную букву и 1 цифру";
+    } else if (formData.password.length >= 255) {
+      newErrors.password = "Пароль не должен превышать 255 символов";
     }
 
     // Repeat password validation
     if (!formData.repeatPassword) {
-      newErrors.repeatPassword = "Please repeat your password";
+      newErrors.repeatPassword = "Повторите пароль";
     } else if (formData.repeatPassword !== formData.password) {
-      newErrors.repeatPassword = "Passwords do not match";
+      newErrors.repeatPassword = "Пароли не совпадают";
     }
 
     // Full name validation
     if (!formData.full_name) {
-      newErrors.full_name = "Full name is required";
+      newErrors.full_name = "Требуется ФИО";
     } else if (formData.full_name.length >= 255) {
-      newErrors.full_name = "Must be less than 255 characters";
+      newErrors.full_name = "ФИО не должно превышать 255 символов";
     }
 
     // Phone validation
     const phoneRegex =
       /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
     if (!formData.phone_number) {
-      newErrors.phone_number = "Phone number is required";
+      newErrors.phone_number = "Требуется номер телефона";
     } else if (!phoneRegex.test(formData.phone_number)) {
-      newErrors.phone_number = "Invalid Russian phone format";
+      newErrors.phone_number = "Не российский формат телефонного номера";
     }
 
     // Birth date validation
-    const dateRegex =
-      /^((19|20)\d{2}-(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(19|20)\d{2}-(0[469]|11)-(0[1-9]|[12][0-9]|30)|(19|20)\d{2}-02-(0[1-9]|1[0-9]|2[0-8])|(19(0[48]|[2468][048]|[13579][26])|20(0[48]|[2468][048]|[13579][26]))-02-29)$/;
+    const dateRegex = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     if (!formData.birth_date) {
-      newErrors.birth_date = "Birth date is required";
+      newErrors.birth_date = "Требуется дата рождения";
     } else if (!dateRegex.test(formData.birth_date)) {
-      newErrors.birth_date = "Use YYYY-MM-DD format";
+      newErrors.birth_date = "Введите в формате ГГГГ-ММ-ДД";
+    } else {
+      // Проверка что пользователю не менее 18 лет
+      const birthDate = new Date(formData.birth_date);
+      const today = new Date();
+
+      // Вычисляем минимальную дату для 18 лет
+      const minDate = new Date(
+        today.getFullYear() - 18,
+        today.getMonth(),
+        today.getDate()
+      );
+
+      if (birthDate > minDate) {
+        newErrors.birth_date = "Вам должно быть не менее 18 лет";
+      }
     }
 
     return newErrors;
@@ -143,7 +157,7 @@ const SignUp = () => {
       if (response.ok) {
         setSubmitStatus({
           success: true,
-          message: "User successfully created!",
+          message: "Регистрация прошла успешно!",
         });
         // Reset form on success
         setFormData({
@@ -160,14 +174,14 @@ const SignUp = () => {
     } catch (error) {
       setSubmitStatus({
         success: false,
-        message: "Network error. Please try again.",
+        message: "Ошибка сети. Повторите позже.",
       });
     }
   };
 
   return (
     <div className="signup-container">
-      <h2>Create Account</h2>
+      <h2>Регистрация</h2>
 
       {submitStatus.message && (
         <div className={`alert ${submitStatus.success ? "success" : "error"}`}>
@@ -178,7 +192,7 @@ const SignUp = () => {
       <form onSubmit={handleSubmit}>
         {/* Login Field */}
         <div className="form-group">
-          <label>Username*</label>
+          <label>Логин*</label>
           <input
             type="text"
             name="login"
@@ -189,13 +203,15 @@ const SignUp = () => {
           {errors.login ? (
             <span className="error">{errors.login}</span>
           ) : (
-            <div className="hint">4-14 chars, must contain a number</div>
+            <div className="hint">
+              4-14 символов. Должен содержать минимум 1 цифру
+            </div>
           )}
         </div>
 
         {/* Password Field */}
         <div className="form-group password-field">
-          <label>Password*</label>
+          <label>Пароль*</label>
           <div className="password-input-container">
             <input
               type={showPassword ? "text" : "password"}
@@ -218,14 +234,15 @@ const SignUp = () => {
             <span className="error">{errors.password}</span>
           ) : (
             <div className="hint">
-              At least 7 characters with 1 uppercase letter and 1 number
+              Пароль должен содержать 7 латинских букв, минимум 1 прописную
+              букву и 1 цифру
             </div>
           )}
         </div>
 
         {/* Repeat Password */}
         <div className="form-group password-field">
-          <label>Repeat Password*</label>
+          <label>Повторение пароля*</label>
           <div className="password-input-container">
             <input
               type={showRepeatPassword ? "text" : "password"}
@@ -253,7 +270,7 @@ const SignUp = () => {
 
         {/* Full Name */}
         <div className="form-group">
-          <label>Full Name*</label>
+          <label>ФИО*</label>
           <input
             type="text"
             name="full_name"
@@ -269,7 +286,7 @@ const SignUp = () => {
 
         {/* Phone Number */}
         <div className="form-group">
-          <label>Phone Number*</label>
+          <label>Номер телефона*</label>
           <input
             type="tel"
             name="phone_number"
@@ -282,13 +299,13 @@ const SignUp = () => {
           {errors.phone_number ? (
             <span className="error">{errors.phone_number}</span>
           ) : (
-            <div className="hint">Russian phone format: 8 (XXX) XXX-XX-XX</div>
+            ""
           )}
         </div>
 
         {/* Birth Date */}
         <div className="form-group">
-          <label>Birth Date*</label>
+          <label>Дата рождения*</label>
           <input
             type="date"
             name="birth_date"
@@ -299,7 +316,7 @@ const SignUp = () => {
           {errors.birth_date ? (
             <span className="error">{errors.birth_date}</span>
           ) : (
-            <div className="hint">Format: YYYY-MM-DD</div>
+            ""
           )}
         </div>
 
