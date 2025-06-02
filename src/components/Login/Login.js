@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LOGIN_PATH, SERVER_LOCATION } from "../Constants/Server";
 import { useAuth } from "../AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -81,7 +81,7 @@ const Login = () => {
   return (
     <div className="container">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Вход</h2>
+        <h2>Авторизация</h2>
         {error && <div className="error-message">{error}</div>}
 
         <div className="form-group">
@@ -110,6 +110,12 @@ const Login = () => {
           {isLoading ? "Входим..." : "Войти"}
         </button>
       </form>
+      <section className="under-form">
+        <p>Нет аккаунта? </p>
+        <Link className="under-form-link" to="/signup">
+          Зарегистрироваться
+        </Link>
+      </section>
     </div>
   );
 };

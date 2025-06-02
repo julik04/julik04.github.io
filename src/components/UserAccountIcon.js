@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
 
 const UserIcon = ({ setModalActive }) => {
   const [initials, setInitials] = useState("");
@@ -8,6 +9,7 @@ const UserIcon = ({ setModalActive }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState("#4e73df");
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = JSON.parse(sessionStorage.getItem("user"));
@@ -149,6 +151,34 @@ const UserIcon = ({ setModalActive }) => {
           </div>
 
           <div style={{ padding: "0.5rem" }}>
+            <button
+              style={{
+                width: "100%",
+                textAlign: "left",
+                padding: "0.5rem 1rem",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                color: "#4e73df",
+                fontWeight: 500,
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                borderTop: "1px solid #eee",
+              }}
+              onClick={() => navigate("/user/orders")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M2 2h12v2H2V2zm0 3h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5zm2 2v7h8V7H4z" />
+              </svg>
+              Мои заказы
+            </button>
             <button
               style={{
                 width: "100%",

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { SERVER_LOCATION, ORDERS } from "../../Constants/Server";
+import "../../../assets/styles/Orders.css";
 
 export const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -10,9 +12,10 @@ export const Orders = () => {
   });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
-  const [editingOrderId, setEditingOrderId] = useState(null); // Track which order is being edited
+  const navigate = useNavigate();
 
-  // Fetch orders on component mount
+  const [editingOrderId, setEditingOrderId] = useState(null);
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -29,7 +32,6 @@ export const Orders = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error when user types
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -39,13 +41,13 @@ export const Orders = () => {
     const newErrors = {};
 
     if (!formData.user_id) {
-      newErrors.user_id = "User ID is required";
+      newErrors.user_id = "Требуется id пользователя";
     }
 
     if (!formData.order_date) {
-      newErrors.order_date = "Order date is required";
+      newErrors.order_date = "Требуется дата заявки";
     } else if (new Date(formData.order_date) < new Date()) {
-      newErrors.order_date = "Order date cannot be in the past";
+      newErrors.order_date = "Дата заявки не может быть в прошлом";
     }
 
     setErrors(newErrors);
@@ -60,11 +62,9 @@ export const Orders = () => {
     try {
       let url, method;
       if (editingOrderId) {
-        // UPDATE existing order
         url = SERVER_LOCATION + ORDERS + "/edit";
         method = "POST";
       } else {
-        // CREATE new order
         url = SERVER_LOCATION + ORDERS;
         method = "POST";
       }
@@ -85,20 +85,18 @@ export const Orders = () => {
         throw new Error(
           result.data?.message ||
             (editingOrderId
-              ? "Failed to update order"
-              : "Failed to create order")
+              ? "Не получилось обновить заявку"
+              : "Не получилось создать заявку")
         );
       }
 
       setMessage(
-        editingOrderId
-          ? "Order updated successfully!"
-          : "Order created successfully!"
+        editingOrderId ? "Заявка успешно обновлена!" : "Заявка успешно создана!"
       );
 
       setFormData({ user_id: "", order_date: "", comment: "" });
-      setEditingOrderId(null); // Reset edit mode
-      fetchOrders(); // Refresh orders list
+      setEditingOrderId(null);
+      fetchOrders();
     } catch (error) {
       setMessage(error.message);
     }
@@ -122,7 +120,7 @@ export const Orders = () => {
   };
 
   const handleDeleteOrder = async (orderId) => {
-    if (!window.confirm("Are you sure you want to delete this order?")) return;
+    if (!window.confirm("Вы точно хотите удалить заявку?")) return;
 
     try {
       const response = await fetch(`${SERVER_LOCATION}${ORDERS}/${orderId}`, {
@@ -132,18 +130,17 @@ export const Orders = () => {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.data?.message || "Failed to delete order");
+        throw new Error(result.data?.message || "Не получилось удалить заявку");
       }
 
-      setMessage("Order deleted successfully!");
-      setEditingOrderId(null); // Cancel edit if deleting the edited order
-      fetchOrders(); // Refresh orders list
+      setMessage("Заявка успешно удалена!");
+      setEditingOrderId(null);
+      fetchOrders();
     } catch (error) {
       setMessage(error.message);
     }
   };
 
-  // Helper function to format date for datetime-local input
   const formatDateTimeLocal = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -155,107 +152,128 @@ export const Orders = () => {
   };
 
   return (
-    <div>
-      <h1>Orders Management</h1>
+    <div className="product-manager">
+      <>
+        <button className="back-button" onClick={() => navigate("/admin")}>
+          ← Назад
+        </button>
+        <h1>Управление заявками</h1>
 
-      {/* Create/Edit Order Form */}
-      <div className="create-order-form">
-        <h2>{editingOrderId ? "Edit Order" : "Create New Order"}</h2>
-        {message && (
-          <div
-            className={`message ${
-              message.includes("success") ? "success" : "error"
-            }`}
-          >
-            {message}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmitOrder}>
-          <div>
-            <label>User ID:</label>
-            <input
-              type="number"
-              name="user_id"
-              value={formData.user_id}
-              onChange={handleInputChange}
-              disabled={!!editingOrderId} // Disable when editing
-            />
-            {errors.user_id && <span className="error">{errors.user_id}</span>}
-          </div>
-
-          <div>
-            <label>Order Date:</label>
-            <input
-              type="datetime-local"
-              name="order_date"
-              value={formData.order_date}
-              onChange={handleInputChange}
-            />
-            {errors.order_date && (
-              <span className="error">{errors.order_date}</span>
-            )}
-          </div>
-
-          <div>
-            <label>Comment (Optional):</label>
-            <textarea
-              name="comment"
-              value={formData.comment}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="form-buttons">
-            <button type="submit">
-              {editingOrderId ? "Update Order" : "Create Order"}
-            </button>
-            {editingOrderId && (
-              <button
-                type="button"
-                onClick={handleCancelEdit}
-                className="cancel-button"
-              >
-                Cancel Edit
-              </button>
-            )}
-          </div>
-        </form>
-      </div>
-
-      {/* Orders List */}
-      <div className="orders-list">
-        <h2>Existing Orders</h2>
-        {orders.length === 0 ? (
-          <p>No orders found</p>
-        ) : (
-          orders.map((order) => (
-            <div key={order.id} className="order-card">
-              <h3>Order ID: {order.id}</h3>
-              <p>User ID: {order.user_id}</p>
-              <p>Order Date: {new Date(order.order_date).toLocaleString()}</p>
-              <p>Created At: {new Date(order.created_at).toLocaleString()}</p>
-              <p>Updated At: {new Date(order.updated_at).toLocaleString()}</p>
-              {order.comment && <p>Comment: {order.comment}</p>}
-
-              <div className="order-actions">
-                <button
-                  onClick={() => handleEditClick(order)}
-                  className="edit-button"
-                >
-                  Edit Order
-                </button>
-                <button
-                  onClick={() => handleDeleteOrder(order.id)}
-                  className="delete-button"
-                >
-                  Delete Order
-                </button>
-              </div>
+        {/* Create/Edit Order Form */}
+        <div className="product-form">
+          <h2>
+            {editingOrderId ? "Редактировать заявку" : "Создать новую заявку"}
+          </h2>
+          {message && (
+            <div
+              className={`status ${
+                message.includes("успешно") ? "success" : "error"
+              }`}
+            >
+              {message}
             </div>
-          ))
-        )}
-      </div>
+          )}
+
+          <form onSubmit={handleSubmitOrder}>
+            <div className="form-group">
+              <label>ID пользователя:</label>
+              <input
+                type="number"
+                name="user_id"
+                value={formData.user_id}
+                onChange={handleInputChange}
+                disabled={!!editingOrderId}
+                className={errors.user_id ? "error" : ""}
+              />
+              {errors.user_id && (
+                <span className="error-message">{errors.user_id}</span>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label>Дата записи:</label>
+              <input
+                type="datetime-local"
+                name="order_date"
+                value={formData.order_date}
+                onChange={handleInputChange}
+                className={errors.order_date ? "error" : ""}
+              />
+              {errors.order_date && (
+                <span className="error-message">{errors.order_date}</span>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label>Комментарий (необязательно):</label>
+              <textarea
+                name="comment"
+                value={formData.comment}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="form-actions">
+              <button type="submit" className="submit-btn">
+                {editingOrderId ? "Обновить заявку" : "Создать заявку"}
+              </button>
+              {editingOrderId && (
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={handleCancelEdit}
+                >
+                  Отменить редактирование
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+
+        {/* Orders List */}
+        <div className="product-list">
+          <h2>Существующие заявки</h2>
+          {orders.length === 0 ? (
+            <p>Заявки не найдены</p>
+          ) : (
+            <div className="products-container">
+              {orders.map((order) => (
+                <div key={order.id} className="product-card">
+                  <div className="product-details">
+                    <h4>ID заявки: {order.id}</h4>
+                    <p>ID пользователя: {order.user_id}</p>
+                    <p>
+                      Дата записи: {new Date(order.order_date).toLocaleString()}
+                    </p>
+                    <p>
+                      Created At: {new Date(order.created_at).toLocaleString()}
+                    </p>
+                    <p>
+                      Updated At: {new Date(order.updated_at).toLocaleString()}
+                    </p>
+                    {order.comment && <p>Комментарий: {order.comment}</p>}
+
+                    <div className="product-actions">
+                      <button
+                        className="edit-btn"
+                        onClick={() => handleEditClick(order)}
+                      >
+                        Редактировать
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDeleteOrder(order.id)}
+                      >
+                        Удалить
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </>
     </div>
   );
 };

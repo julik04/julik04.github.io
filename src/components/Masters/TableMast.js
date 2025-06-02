@@ -1,6 +1,6 @@
 import "../../App.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { mastersArray } from "../Constants/Masters";
+// import { mastersArray } from "../Constants/Masters";
 import { useState, useEffect } from "react";
 import { SERVER_LOCATION } from "../Constants/Server";
 
@@ -21,7 +21,7 @@ function TableMast() {
       });
   }, []);
 
-  console.log({ masteraArray });
+  // console.log({ masteraArray });
 
   // Ensure mastersArray is defined and is an array
   // if (!Array.isArray(mastersArray)) {
@@ -39,15 +39,15 @@ function TableMast() {
           Опытные мастера. Креативное мышление.
         </p>
         <div className="table_panels">
-          {mastersArray?.map((master, index) => (
+          {masteraArray?.map((master, index) => (
             <div
               key={index}
               className="table_panel"
-              onClick={() => navigate(`/artist/${index}`)}
+              onClick={() => navigate(`/masters/${index + 1}`)}
               role="button"
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ")
-                  navigate(`/artist/${index}`);
+                  navigate(`/masters/${index + 1}`);
               }}
             >
               <div className="table_panel_image_wrapper">

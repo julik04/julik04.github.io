@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SERVER_LOCATION, ORDERS } from "../Constants/Server";
+import "../../assets/styles/UserOrders.css";
 
 function UserOrders() {
   const [orders, setOrders] = useState([]);
@@ -8,9 +9,7 @@ function UserOrders() {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    // Retrieve user data from sessionStorage
     const userData = JSON.parse(sessionStorage.getItem("user"));
-
     if (userData && userData.id) {
       setUserId(userData.id);
     } else {
@@ -20,16 +19,14 @@ function UserOrders() {
   }, []);
 
   useEffect(() => {
-    if (!userId) return; // Don't fetch if userId isn't available
+    if (!userId) return;
 
     const fetchOrders = async () => {
       try {
         const response = await fetch(`${SERVER_LOCATION}${ORDERS}/${userId}`);
-
         if (!response.ok) {
           throw new Error(`Failed to fetch orders: ${response.status}`);
         }
-
         const result = await response.json();
         setOrders(result.data.Orders);
       } catch (err) {
@@ -43,42 +40,53 @@ function UserOrders() {
   }, [userId]);
 
   if (loading) {
-    return <div>Loading orders...</div>;
+    return <div className="orders-loading">Загрузка заявок...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="orders-error">Ошибка: {error}</div>;
   }
 
   return (
-    <div>
-      <h1>Orders for User #{userId}</h1>
+    <section className="orders-section">
+      <div className="orders-container">
+        <h1 className="orders-title">Мои заявки</h1>
 
-      {orders.length === 0 ? (
-        <p>No orders found</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Date</th>
-              <th>Comment</th>
-              <th>Created At</th>
-            </tr>
-          </thead>
-          <tbody>
+        {orders.length === 0 ? (
+          <p className="orders-empty">У вас пока нет заявок</p>
+        ) : (
+          <div className="orders-grid">
             {orders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{new Date(order.order_date).toLocaleString()}</td>
-                <td>{order.comment || "-"}</td>
-                <td>{new Date(order.created_at).toLocaleString()}</td>
-              </tr>
+              <div key={order.id} className="order-card">
+                <div className="order-header">
+                  <h3 className="order-date">
+                    {new Date(order.order_date).toLocaleDateString("ru-RU", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </h3>
+                  <span className="order-status">Запланировано</span>
+                </div>
+
+                <div className="order-body">
+                  <p className="order-comment">
+                    {order.comment || "Без комментария"}
+                  </p>
+                  <div className="order-meta">
+                    <span className="order-created">
+                      Создано: {new Date(order.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
 

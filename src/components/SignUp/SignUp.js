@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { SERVER_LOCATION, SIGN_UP } from "../Constants/Server";
 
@@ -12,12 +14,9 @@ const SignUp = () => {
     phone_number: "",
     birth_date: "",
   });
-
-  // Password visibility states
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-
-  // Validation errors
   const [errors, setErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState({
     success: false,
@@ -181,6 +180,9 @@ const SignUp = () => {
 
   return (
     <div className="signup-container">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ← Назад
+      </button>
       <h2>Регистрация</h2>
 
       {submitStatus.message && (
@@ -321,7 +323,7 @@ const SignUp = () => {
         </div>
 
         <button type="submit" className="submit-btn">
-          Sign Up
+          Зарегистрироваться
         </button>
       </form>
     </div>

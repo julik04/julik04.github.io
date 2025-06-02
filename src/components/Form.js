@@ -19,9 +19,10 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
   const validateField = (name, value) => {
     switch (name) {
       case "order_date":
-        if (!value.trim()) return "Date is required";
+        if (!value.trim()) return "Дата обязательная для заполнения";
         const selectedDate = new Date(value);
-        if (selectedDate < new Date()) return "Date cannot be in the past";
+        if (selectedDate < new Date())
+          return "Дата записи не может быть в прошлом";
         return "";
       default:
         return "";
@@ -64,7 +65,9 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
     try {
       const userData = getUserData();
       if (!userData.id) {
-        throw new Error("User session expired. Please log in again.");
+        throw new Error(
+          "Сессия пользователя истекла. Войдите снова, чтобы продолжить."
+        );
       }
 
       const response = await fetch(`${SERVER_LOCATION}${ORDERS}`, {
@@ -84,13 +87,13 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.data?.message || "Failed to create order");
+        throw new Error(result.data?.message || "Ошибка при создании заказа");
       }
 
       // Success handling
       setServerMessage({
         type: "success",
-        text: "Order created successfully!",
+        text: "Заказ успешно создан!",
       });
 
       // Reset form
@@ -121,7 +124,7 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
         <button className="form_close" onClick={() => setActive(false)}>
           ×
         </button>
-        <h2 className="title">Create New Order</h2>
+        <h2 className="title">Записаться на прием</h2>
 
         {serverMessage && (
           <div className={`server-message ${serverMessage.type}`}>
@@ -138,7 +141,7 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
               value={formData.order_date}
               onChange={handleChange}
             />
-            <span className="placeholder">Order Date & Time</span>
+            <span className="placeholder">Дата и время записи</span>
             {errors.order_date && (
               <span className="error-message">{errors.order_date}</span>
             )}
@@ -153,7 +156,7 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
               onChange={handleChange}
               rows="3"
             />
-            <span className="placeholder">Comments (optional)</span>
+            <span className="placeholder">Комментарий (необязательно)</span>
           </div>
 
           <button
@@ -161,7 +164,7 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
             className={`submit ${isSubmitting ? "submitting" : ""}`}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Creating Order..." : "Create Order"}
+            {isSubmitting ? "Создание заявки..." : "Отправить заявку"}
           </button>
         </form>
       </div>

@@ -62,7 +62,7 @@ function Header() {
           {sessionStorage.getItem("user") ? (
             <UserIcon setModalActive={setModalActive} />
           ) : (
-            <Link to="/login">Вход</Link>
+            <Link to="/login">Авторизация</Link>
           )}
         </div>
         <div

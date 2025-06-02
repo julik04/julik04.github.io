@@ -20,6 +20,7 @@ import GraphicSitemap from "./components/GraphicSitemap.js";
 import TextSitemap from "./components/TextSitemap.js";
 import UserIcon from "./components/UserAccountIcon.js";
 import Banner from "./components/Banner.js";
+import UserOrders from "./components/User/UserOrders.js";
 
 export function MainPage() {
   return (
@@ -156,6 +157,20 @@ export function TextSitemapPage() {
         <Header />
         <main>
           <TextSitemap />
+        </main>
+        <Footer />
+      </AuthProvider>
+    </>
+  );
+}
+
+export function UserOrdersPage() {
+  return (
+    <>
+      <AuthProvider>
+        <Header />
+        <main>
+          <UserOrders />
         </main>
         <Footer />
       </AuthProvider>

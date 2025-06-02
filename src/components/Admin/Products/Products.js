@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SERVER_LOCATION, PRODUCTS, PRODUCT } from "../../Constants/Server";
 
@@ -7,6 +8,8 @@ const ProductManager = () => {
   const [products, setProducts] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: "",
     price: "",
@@ -79,7 +82,7 @@ const ProductManager = () => {
       if (!file.type.startsWith("image/")) {
         setFormErrors((prev) => ({
           ...prev,
-          image: "Please select a valid image file",
+          image: "Выберите медиа файл",
         }));
       } else {
         setFormErrors((prev) => ({ ...prev, image: "" }));
@@ -90,19 +93,19 @@ const ProductManager = () => {
   // Validate form data
   const validateForm = () => {
     const errors = {
-      title: !formData.title ? "Title is required" : "",
+      title: !formData.title ? "Название необходимо" : "",
       price: !formData.price
-        ? "Price is required"
+        ? "Цена необходима"
         : isNaN(Number(formData.price))
-        ? "Price must be a number"
+        ? "Цена должна быть числом"
         : "",
-      category_id: !formData.category_id ? "Category is required" : "",
+      category_id: !formData.category_id ? "Категория необходима" : "",
       // Image is not required when editing
       image:
         !isEditing && !formData.image
-          ? "Image is required"
+          ? "Изображение необходимо"
           : formData.image && !formData.image.type?.startsWith("image/")
-          ? "Invalid image file"
+          ? "Изображение не валидно"
           : "",
     };
 
@@ -154,7 +157,7 @@ const ProductManager = () => {
         success: false,
         message:
           err.response?.data?.data?.message ||
-          `Failed to ${isEditing ? "update" : "create"} product`,
+          `Не получилось ${isEditing ? "обновить" : "создать"} товар`,
       });
     }
   };
@@ -185,7 +188,7 @@ const ProductManager = () => {
     if (!category) {
       setSubmitStatus({
         success: false,
-        message: "Category not found for this product",
+        message: "Не найдена категория данного товара",
       });
       return;
     }
@@ -209,8 +212,7 @@ const ProductManager = () => {
 
   // Handle delete button click
   const handleDelete = async (productId) => {
-    if (!window.confirm("Are you sure you want to delete this product?"))
-      return;
+    if (!window.confirm("Вы точно хотите удалить данный товар?")) return;
 
     try {
       await axios.delete(`${SERVER_LOCATION}${PRODUCT}/${productId}`);
@@ -222,132 +224,143 @@ const ProductManager = () => {
 
       setSubmitStatus({
         success: true,
-        message: "Product deleted successfully",
+        message: "Товар успешно удален",
       });
       fetchProducts(); // Refresh product list
     } catch (err) {
       setSubmitStatus({
         success: false,
         message:
-          err.response?.data?.data?.message || "Failed to delete product",
+          err.response?.data?.data?.message || "Не получилось удалить товар",
       });
     }
   };
 
   return (
     <div className="product-manager">
-      <h1>Product Management</h1>
+      <>
+        <button className="back-button" onClick={() => navigate("/admin")}>
+          ← Назад
+        </button>
+        <h1>Управление товарами</h1>
 
-      {/* Product Creation/Edit Form */}
-      <div className="product-form">
-        <h2>{isEditing ? "Edit Product" : "Create New Product"}</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Title</label>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleInputChange}
-              className={formErrors.title ? "error" : ""}
-            />
-            {formErrors.title && (
-              <span className="error-message">{formErrors.title}</span>
-            )}
-          </div>
+        {/* Product Creation/Edit Form */}
+        <div className="product-form">
+          <h2>{isEditing ? "Редактировать товар" : "Создать новый товар"}</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Название</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                className={formErrors.title ? "error" : ""}
+              />
+              {formErrors.title && (
+                <span className="error-message">{formErrors.title}</span>
+              )}
+            </div>
 
-          <div className="form-group">
-            <label>Price ($)</label>
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleInputChange}
-              className={formErrors.price ? "error" : ""}
-            />
-            {formErrors.price && (
-              <span className="error-message">{formErrors.price}</span>
-            )}
-          </div>
+            <div className="form-group">
+              <label>Цена </label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleInputChange}
+                className={formErrors.price ? "error" : ""}
+              />
+              {formErrors.price && (
+                <span className="error-message">{formErrors.price}</span>
+              )}
+            </div>
 
-          <div className="form-group">
-            <label>Category</label>
-            <select
-              name="category_id"
-              value={formData.category_id}
-              onChange={handleInputChange}
-              className={formErrors.category_id ? "error" : ""}
-            >
-              <option value="">Select a category</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            {formErrors.category_id && (
-              <span className="error-message">{formErrors.category_id}</span>
-            )}
-          </div>
+            <div className="form-group">
+              <label>Категория</label>
+              <select
+                name="category_id"
+                value={formData.category_id}
+                onChange={handleInputChange}
+                className={formErrors.category_id ? "error" : ""}
+              >
+                <option value="">Выберите категорию</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              {formErrors.category_id && (
+                <span className="error-message">{formErrors.category_id}</span>
+              )}
+            </div>
 
-          <div className="form-group">
-            <label>Product Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className={formErrors.image ? "error" : ""}
-            />
-            {formErrors.image && (
-              <span className="error-message">{formErrors.image}</span>
-            )}
+            <div className="form-group">
+              <label>Изображение товара</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className={formErrors.image ? "error" : ""}
+              />
+              {formErrors.image && (
+                <span className="error-message">{formErrors.image}</span>
+              )}
 
-            {/* Show existing image when editing */}
-            {isEditing && existingImage && (
-              <div className="existing-image">
-                <p>Current Image:</p>
-                <img
-                  src={SERVER_LOCATION + existingImage}
-                  alt="Current product"
-                  style={{ maxWidth: "100px", marginTop: "10px" }}
-                />
+              {/* Show existing image when editing */}
+              {isEditing && existingImage && (
+                <div className="existing-image">
+                  <p>Существующее изображение:</p>
+                  <img
+                    src={SERVER_LOCATION + existingImage}
+                    alt="Current product"
+                    style={{ maxWidth: "100px", marginTop: "10px" }}
+                  />
+                </div>
+              )}
+            </div>
+
+            {submitStatus && (
+              <div
+                className={`status ${
+                  submitStatus.success ? "success" : "error"
+                }`}
+              >
+                {submitStatus.message}
               </div>
             )}
-          </div>
 
-          {submitStatus && (
-            <div
-              className={`status ${submitStatus.success ? "success" : "error"}`}
-            >
-              {submitStatus.message}
-            </div>
-          )}
-
-          <div className="form-actions">
-            <button type="submit" className="submit-btn">
-              {isEditing ? "Update Product" : "Create Product"}
-            </button>
-
-            {isEditing && (
-              <button type="button" className="cancel-btn" onClick={resetForm}>
-                Cancel Edit
+            <div className="form-actions">
+              <button type="submit" className="submit-btn">
+                {isEditing ? "Обновить товар" : "Создать товар"}
               </button>
-            )}
-          </div>
-        </form>
-      </div>
+
+              {isEditing && (
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={resetForm}
+                >
+                  Отменить редактирование
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+      </>
 
       {/* Product List */}
       <div className="product-list">
-        <h2>Product List</h2>
+        <h2>Список товаров</h2>
         {loading ? (
-          <p>Loading products...</p>
+          <p>Загрузка товаров...</p>
         ) : error ? (
           <p className="error">{error}</p>
         ) : products &&
           typeof products === "object" &&
           Object.keys(products).length === 0 ? (
-          <p>No products found</p>
+          <p>Товары не найдены</p>
         ) : (
           Object.entries(products).map(([categoryName, productsInCategory]) => (
             <div key={categoryName} className="category-section">
@@ -365,26 +378,26 @@ const ProductManager = () => {
                           }
                         />
                       ) : (
-                        <div className="image-placeholder">No Image</div>
+                        <div className="image-placeholder">Нет изображения</div>
                       )}
                     </div>
                     <div className="product-details">
                       <h4>{product.Название}</h4>
-                      <p>Price: ${product.Цена}</p>
-                      <p>Category: {categoryName}</p>
+                      <p>Цена: {product.Цена}</p>
+                      <p>Категория: {categoryName}</p>
 
                       <div className="product-actions">
                         <button
                           className="edit-btn"
                           onClick={() => handleEdit(product, categoryName)}
                         >
-                          Edit
+                          Редактировать
                         </button>
                         <button
                           className="delete-btn"
                           onClick={() => handleDelete(product.id)}
                         >
-                          Delete
+                          Удалить
                         </button>
                       </div>
                     </div>

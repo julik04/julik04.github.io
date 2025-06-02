@@ -1,7 +1,5 @@
-/* eslint-disable default-case */
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-
 import ExpandableItem from "./ExpandableItem";
 import CardProduct from "./CardProduct";
 // import { Products } from "../Constants/Products";
@@ -100,9 +98,9 @@ function ShopMain() {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [Products, setProducts] = useState([]);
 
-  console.log("selectedCategory", selectedCategory);
-  console.log("selectedSubcategory", selectedSubcategory);
-  console.log("path", path);
+  // console.log("selectedCategory", selectedCategory);
+  // console.log("selectedSubcategory", selectedSubcategory);
+  // console.log("path", path);
 
   useEffect(() => {
     fetch(`${SERVER_LOCATION}/products`, {
