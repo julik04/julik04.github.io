@@ -13,8 +13,11 @@ export const Orders = () => {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
   const [editingOrderId, setEditingOrderId] = useState(null);
+  const getAuthHeader = () => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    return user?.token ? { Authorization: `Bearer ${user.token}` } : {};
+  };
 
   useEffect(() => {
     fetchOrders();
@@ -75,7 +78,7 @@ export const Orders = () => {
 
       const response = await fetch(url, {
         method,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...getAuthHeader() },
         body: JSON.stringify(payload),
       });
 
@@ -125,6 +128,7 @@ export const Orders = () => {
     try {
       const response = await fetch(`${SERVER_LOCATION}${ORDERS}/${orderId}`, {
         method: "DELETE",
+        headers: { ...getAuthHeader() },
       });
 
       const result = await response.json();

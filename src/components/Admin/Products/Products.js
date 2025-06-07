@@ -9,6 +9,10 @@ const ProductManager = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const getAuthHeader = () => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    return user?.token ? { Authorization: `Bearer ${user.token}` } : {};
+  };
 
   const [formData, setFormData] = useState({
     title: "",
@@ -136,7 +140,10 @@ const ProductManager = () => {
           `${SERVER_LOCATION}${PRODUCT}/${editingProductId}`,
           data,
           {
-            headers: { "Content-Type": "multipart/form-data" },
+            headers: {
+              "Content-Type": "multipart/form-data",
+              ...getAuthHeader(),
+            },
           }
         );
       } else {
@@ -215,7 +222,9 @@ const ProductManager = () => {
     if (!window.confirm("Вы точно хотите удалить данный товар?")) return;
 
     try {
-      await axios.delete(`${SERVER_LOCATION}${PRODUCT}/${productId}`);
+      await axios.delete(`${SERVER_LOCATION}${PRODUCT}/${productId}`, {
+        headers: { ...getAuthHeader() },
+      });
 
       // If deleting the product currently being edited, reset form
       if (isEditing && productId === editingProductId) {
