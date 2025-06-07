@@ -1,5 +1,3 @@
-import React from "react";
-
 // Компонент для расширяемого элемента
 const ExpandableItem = ({
   title,

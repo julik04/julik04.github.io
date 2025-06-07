@@ -10,7 +10,6 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverMessage, setServerMessage] = useState(null);
 
-  // Get user ID from sessionStorage
   const getUserData = () => {
     const userData = JSON.parse(sessionStorage.getItem("user"));
     return userData || {};
@@ -74,8 +73,6 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // Include authorization token if needed
-          // "Authorization": `Bearer ${userData.token}`
         },
         body: JSON.stringify({
           user_id: userData.id,
@@ -90,24 +87,20 @@ const OrderForm = ({ active, setActive, onOrderCreated }) => {
         throw new Error(result.data?.message || "Ошибка при создании заказа");
       }
 
-      // Success handling
       setServerMessage({
         type: "success",
         text: "Заказ успешно создан!",
       });
 
-      // Reset form
       setFormData({
         order_date: "",
         comment: "",
       });
 
-      // Notify parent component about new order
       if (onOrderCreated) {
         onOrderCreated(result.data.Order);
       }
 
-      // Close form after delay
       setTimeout(() => setActive(false), 1500);
     } catch (err) {
       setServerMessage({ type: "error", text: err.message });

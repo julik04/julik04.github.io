@@ -25,7 +25,7 @@ function Footer() {
             </p>
           </div>
         </div>
-        <small className="copyright">COPYRIGHT 2024 © ВСЕ ПРАВА ЗАЩИЩЕНЫ</small>
+        <small className="copyright">COPYRIGHT 2025 © ВСЕ ПРАВА ЗАЩИЩЕНЫ</small>
         <br />
         <Link to="/sitemap/graphic">
           Графическая карта сайта{" / "}

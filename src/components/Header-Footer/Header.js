@@ -1,6 +1,6 @@
-import { json, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Form from "../Form.js";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import "../../App.css";
 import { useAuth } from "../AuthContext.js";
 import UserIcon from "../UserAccountIcon.js";
@@ -55,9 +55,6 @@ function Header() {
           <a className="telefon" href="tel:+7(888)777-75-55">
             +7 (888) 777-75-55
           </a>
-          {/* <Link className="header-text-address" to="/shopMain">
-            Магазин
-          </Link> */}{" "}
           <br />
           {sessionStorage.getItem("user") ? (
             <UserIcon setModalActive={setModalActive} />

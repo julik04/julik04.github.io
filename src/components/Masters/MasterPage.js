@@ -21,7 +21,7 @@ export function MasterPage() {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+          throw new Error(`HTTP ошибка! Статус: ${res.status}`);
         }
         return res.json();
       })
@@ -34,7 +34,7 @@ export function MasterPage() {
       })
       .catch((err) => {
         setError(err.message);
-        console.error("Error fetching master:", err);
+        console.error("Ошибка получения мастеров:", err);
       })
       .finally(() => {
         setLoading(false);
@@ -68,7 +68,6 @@ export function MasterPage() {
       <button className="back-button" onClick={() => navigate(-1)}>
         ← Назад
       </button>
-
       <div className="master-info">
         <h1>{master.name}</h1>
         {master.image && (
@@ -80,7 +79,6 @@ export function MasterPage() {
         )}
         <p className="master-resume">{master.resume}</p>
       </div>
-
       {master.gallery && master.gallery.length > 0 && (
         <div className="master-gallery">
           <h2>Галерея работ</h2>
@@ -102,7 +100,6 @@ export function MasterPage() {
           </div>
         </div>
       )}
-
       {isZoomed && (
         <div className="image-modal" onClick={() => setIsZoomed(false)}>
           <div className="modal-content">
@@ -115,14 +112,12 @@ export function MasterPage() {
             >
               ‹
             </button>
-
             <img
               src={selectedImage}
               alt="Zoomed"
               className="zoomed-image"
               onClick={(e) => e.stopPropagation()}
             />
-
             <button
               className="nav-btn next-btn"
               onClick={(e) => {
@@ -132,11 +127,9 @@ export function MasterPage() {
             >
               ›
             </button>
-
             <button className="close-btn" onClick={() => setIsZoomed(false)}>
               ×
             </button>
-
             <div className="image-counter">
               {currentImageIndex + 1} / {master.gallery.length}
             </div>

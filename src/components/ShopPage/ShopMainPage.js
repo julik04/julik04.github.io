@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import ExpandableItem from "./ExpandableItem";
 import CardProduct from "./CardProduct";
-// import { Products } from "../Constants/Products";
 import { SERVER_LOCATION } from "../Constants/Server";
 
 const subCategories = {
@@ -97,10 +96,6 @@ function ShopMain() {
   const [path, setPath] = useState(["Главная"]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [Products, setProducts] = useState([]);
-
-  // console.log("selectedCategory", selectedCategory);
-  // console.log("selectedSubcategory", selectedSubcategory);
-  // console.log("path", path);
 
   useEffect(() => {
     fetch(`${SERVER_LOCATION}/products`, {
@@ -381,7 +376,6 @@ function ShopMain() {
           <div className="goods">
             {selectedProducts.length > 0 ? (
               selectedProducts.map((item, index) => {
-                // console.log(`item ${index}`, item);
                 return (
                   <CardProduct
                     key={index}
