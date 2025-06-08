@@ -149,7 +149,10 @@ const ProductManager = () => {
       } else {
         // Create new product
         response = await axios.post(SERVER_LOCATION + PRODUCT, data, {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+            ...getAuthHeader(),
+          },
         });
       }
 

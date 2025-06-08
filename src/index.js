@@ -22,6 +22,7 @@ import { AdminPanel } from "./components/Admin/AdminPanel";
 import { Orders } from "./components/Admin/Orders/Orders";
 import Products from "./components/Admin/Products/Products";
 import SignUpPage from "./components/SignUp/SignUp";
+import SingleProduct from "./components/SingleProduct";
 // import UserOrdersPage from "./components/User/UserOrders";
 
 const router = createBrowserRouter([
@@ -57,14 +58,15 @@ const router = createBrowserRouter([
     path: "/shopMain",
     element: <ShopMainPage />,
   },
-  {
-    path: "/категория/:productInfo",
-    element: <ProductPageTemplate />,
-  },
+  // {
+  //   path: "/категория/:productInfo",
+  //   element: <ProductPageTemplate />,
+  // },
   {
     path: "/masters/:id",
     element: <MasterPage />,
   },
+  { path: "product/:id", element: <SingleProduct /> },
   {
     path: "/sitemap/graphic",
     element: <GraphicSitemapPage />,

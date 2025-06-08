@@ -1,4 +1,3 @@
-// Компонент для расширяемого элемента
 const ExpandableItem = ({
   title,
   contentArr,
@@ -16,18 +15,18 @@ const ExpandableItem = ({
         <h3 className="expandable">{title}</h3>
       </div>
       {isExpanded &&
-        contentArr?.map((item) => (
-          <div key={item}>
+        contentArr?.map((category) => (
+          <div key={category}>
             <p
               className={`catalogue-list-expandable ${
-                selectedCategory === item ? "selected" : ""
+                selectedCategory === category ? "selected" : ""
               }`}
-              onClick={() => onCategorySelect(item)}
+              onClick={() => onCategorySelect(category)}
             >
-              {item}
+              {category}
             </p>
-            {selectedCategory === item &&
-              subCategories[item]?.map((subcat) => (
+            {selectedCategory === category &&
+              subCategories[category]?.map((subcat) => (
                 <div
                   key={subcat}
                   className={`subcategories ${
