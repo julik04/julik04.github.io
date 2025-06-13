@@ -18,7 +18,6 @@ import Login from "./components/Login/Login.js";
 import { AuthProvider, useAuth } from "./components/AuthContext.js";
 import GraphicSitemap from "./components/GraphicSitemap.js";
 import TextSitemap from "./components/TextSitemap.js";
-import UserIcon from "./components/UserAccountIcon.js";
 import Banner from "./components/Banner.js";
 import UserOrders from "./components/User/UserOrders.js";
 

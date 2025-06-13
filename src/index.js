@@ -17,12 +17,11 @@ import {
 import { MasterPage } from "./components/Masters/MasterPage";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ProductPageTemplate from "./components/ShopPage/ProductPageTemplate";
 import { AdminPanel } from "./components/Admin/AdminPanel";
 import { Orders } from "./components/Admin/Orders/Orders";
 import Products from "./components/Admin/Products/Products";
 import SignUpPage from "./components/SignUp/SignUp";
-import SingleProduct from "./components/SingleProduct";
+import SingleProduct from "./components/ShopPage/SingleProduct";
 // import UserOrdersPage from "./components/User/UserOrders";
 
 const router = createBrowserRouter([

@@ -3356,3 +3356,170 @@ input {
     grid-template-columns: 1fr;
   }
 }
+
+/* Адаптивность для ShopMainPage */
+@media screen and (max-width: 1024px) {
+  .shop-container {
+    margin-left: 100px;
+  }
+
+  .sub-header-container {
+    padding-left: 100px;
+  }
+
+  .goods {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 30px 15px;
+  }
+
+  .card {
+    width: 240px;
+    margin: 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .shop-container {
+    margin-left: 50px;
+  }
+
+  .sub-header-container {
+    padding-left: 50px;
+  }
+
+  .catalogue {
+    flex-direction: column;
+  }
+
+  .list {
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .catalogue-list-expandable,
+  .expandable,
+  .subcategories {
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  .goods {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .card {
+    width: 280px;
+    margin: 10px;
+  }
+
+  .sub-header {
+    font-size: 20px;
+    padding-top: 20px;
+  }
+
+  .sub-header-path {
+    padding-bottom: 20px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .shop-container {
+    margin-left: 20px;
+  }
+
+  .sub-header-container {
+    padding-left: 20px;
+  }
+
+  .list {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 10px 0;
+  }
+
+  .catalogue-list-expandable,
+  .expandable,
+  .subcategories {
+    padding: 12px 15px;
+    font-size: 13px;
+    width: 100%;
+  }
+
+  .card {
+    width: 260px;
+    margin: 8px;
+  }
+
+  .sub-header {
+    font-size: 18px;
+    padding-top: 15px;
+  }
+
+  .breadcrumbs {
+    font-size: 12px;
+  }
+
+  .card .content {
+    padding: 12px;
+  }
+
+  .card .title {
+    font-size: 14px;
+  }
+
+  .card .price {
+    font-size: 16px;
+  }
+}
+
+/* Дополнительные стили для хлебных крошек */
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+  color: var(--text-purple);
+  font-size: 14px;
+}
+
+.breadcrumb-item {
+  cursor: pointer;
+  transition: color 0.3s;
+  margin-right: 5px;
+}
+
+.breadcrumb-item:hover {
+  color: var(--text-darkpurple);
+  text-decoration: underline;
+}
+
+.breadcrumb-item.selected {
+  color: var(--text-darkpurple);
+  font-weight: 500;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--text-purple);
+  padding: 40px 0;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 768px) {
+  .empty-state {
+    font-size: 16px;
+    padding: 30px 0;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .empty-state {
+    font-size: 14px;
+    padding: 20px 0;
+  }
+}

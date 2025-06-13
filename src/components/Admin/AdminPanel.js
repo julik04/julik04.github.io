@@ -12,7 +12,7 @@ export function AdminPanel() {
         <h1>Админ панель</h1>
         <div className="admin-links">
           <Link to="/admin/orders" className="admin-link">
-            Упарвление заявками
+            Управление заявками
           </Link>
           <Link to="/admin/products" className="admin-link">
             Управление товарами
