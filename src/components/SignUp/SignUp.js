@@ -66,7 +66,7 @@ const SignUp = () => {
       newErrors.login = "Требуется логин";
     } else if (!/^(?=.*\d)[a-zA-Z0-9]{4,14}$/.test(formData.login)) {
       newErrors.login =
-        "Логин должен содержать 4-14 латинских букв и минимум 1 цифру";
+        "Логин должен содержать 7-14 латинских букв и минимум 1 цифру";
     } else if (formData.login.length <= 6 || formData.login.length >= 255) {
       newErrors.login =
         "Логин должен содержать минимум 7 символов и максимум - 255";
@@ -206,7 +206,7 @@ const SignUp = () => {
             <span className="error">{errors.login}</span>
           ) : (
             <div className="hint">
-              4-14 символов. Должен содержать минимум 1 цифру
+              7-14 символов. Должен содержать минимум 1 цифру
             </div>
           )}
         </div>

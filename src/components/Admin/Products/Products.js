@@ -362,7 +362,6 @@ const ProductManager = () => {
         </div>
       </>
 
-      {/* Product List */}
       <div className="product-list">
         <h2>Список товаров</h2>
         {loading ? (

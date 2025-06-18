@@ -17,10 +17,17 @@ img {
   max-width: 100%;
 }
 
+html,
 body {
-  min-height: 100vh;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
   font-family: "Forum", regular;
 }
 
@@ -1085,6 +1092,7 @@ a {
 
 .footer {
   padding: 10px 0px 20px;
+  flex-shrink: 0;
   margin-top: auto;
   /* visual */
   font-weight: 400;
@@ -1092,6 +1100,9 @@ a {
   text-transform: uppercase;
   background-color: var(--text-purple);
   color: var(--text-white);
+  width: 100%;
+  position: relative;
+  bottom: 0;
 }
 
 .footer_content {
@@ -2144,6 +2155,10 @@ input {
   padding: 30px;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .login-form h2 {
@@ -2254,6 +2269,7 @@ input {
   .login-form {
     margin: 20px;
     padding: 20px;
+    min-height: calc(100vh - 40px);
   }
 
   .login-form h2 {
@@ -2684,7 +2700,6 @@ input {
 }
 
 .order-header {
-  background-color: var(--text-lightpurple);
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;

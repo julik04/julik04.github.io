@@ -49,14 +49,6 @@
   box-shadow: 0 8px 20px rgba(53, 47, 68, 0.15);
 }
 
-.order-header {
-  background-color: var(--text-lightpurple);
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .order-date {
   color: var(--text-white);
   font-size: 18px;
