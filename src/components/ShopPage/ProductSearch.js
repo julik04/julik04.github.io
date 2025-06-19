@@ -22,7 +22,7 @@ const ProductSearch = () => {
         return res.json();
       })
       .then((data) => {
-        console.log({ data });
+        console.log("Данные продуктов:", data.data.Products);
         setProducts(data.data.Products);
       });
   }, []);
@@ -61,7 +61,8 @@ const ProductSearch = () => {
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product, index) => (
               <CardProduct
-                productInfo={JSON.stringify(product)}
+                id={product.id}
+                productInfo={product}
                 price={product.Цена}
                 productSubcategory={"категория"}
                 productIndex={index}

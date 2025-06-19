@@ -2144,11 +2144,21 @@ input {
   justify-content: center;
 }
 .under-form-link {
-  color: var(--text-darkpurple);
-  font-size: 18px;
+  font-size: 28px;
   margin-left: 5px;
+  text-decoration: none;
+  color: var(--text-darkpurple);
+  transition: text-decoration 0.5s ease;
+  cursor: pointer;
 }
-
+.under-form-link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.under-form-text {
+  font-size: 28px;
+}
 .login-form {
   max-width: 400px;
   margin: 40px auto;
@@ -2159,6 +2169,7 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 50vh;
 }
 
 .login-form h2 {
@@ -2263,6 +2274,9 @@ input {
   background-color: var(--text-darkpurple);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(92, 84, 112, 0.2);
+}
+.logged-in {
+  min-height: 60vh;
 }
 
 @media screen and (max-width: 576px) {
@@ -2476,7 +2490,7 @@ input {
 
 /* SignUp Container */
 .signup-container {
-  padding: 30px;
+  padding: 50px;
   background-color: var(--back-pink);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(53, 47, 68, 0.15);
@@ -2650,6 +2664,7 @@ input {
 /* Orders Section */
 .orders-section {
   background-color: var(--back-pink);
+  min-height: 70vh;
 }
 
 .orders-container {

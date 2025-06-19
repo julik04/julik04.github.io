@@ -112,7 +112,7 @@ const SignUp = () => {
     if (!formData.birth_date) {
       newErrors.birth_date = "Требуется дата рождения";
     } else if (!dateRegex.test(formData.birth_date)) {
-      newErrors.birth_date = "Введите в формате ГГГГ-ММ-ДД";
+      newErrors.birth_date = "Введите в формате ДД.ММ.ГГГГ";
     } else {
       // Проверка что пользователю не менее 18 лет
       const birthDate = new Date(formData.birth_date);

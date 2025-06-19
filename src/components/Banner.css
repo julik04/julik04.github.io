@@ -41,13 +41,13 @@
 .banner-button {
   width: 260px;
   height: 82px;
-  background: #ffc509;
+  background: #5c5470;
   border-radius: 60px;
   border: none;
   font-weight: 700;
   font-size: 32px;
   line-height: 44px;
-  color: #000000;
+  color: #fff;
   cursor: pointer;
   transition: transform 0.3s ease;
   font-family: "Forum";
@@ -114,7 +114,7 @@
   position: absolute;
   width: 200px;
   height: 200px;
-  background: linear-gradient(180deg, #ffc509 0%, rgba(255, 195, 0, 0.1) 100%);
+  background: linear-gradient(180deg, #e2dfe7 0%, #5c5470 100%);
   border-radius: 50%;
   right: 100px;
   bottom: -50px;
@@ -137,7 +137,7 @@
   position: absolute;
   width: 100px;
   height: 100px;
-  background: linear-gradient(180deg, #ffc509 0%, rgba(255, 195, 0, 0.1) 100%);
+  background: linear-gradient(180deg, #e2dfe7 0%, #5c5470 100%);
   border-radius: 50%;
   left: 50%;
   top: -30px;

@@ -6,7 +6,9 @@ function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer_content">
-          <h5 className="black_lotus">Тату студия - Black Lotus</h5>
+          <h5 className="black_lotus">
+            Тату студия - <br /> Black Lotus
+          </h5>
 
           <div className="content_left">
             <p className="left_p">Телефон Tg/Whapp Адрес Метро</p>

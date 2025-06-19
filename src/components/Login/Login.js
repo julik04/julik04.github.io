@@ -64,16 +64,18 @@ const Login = () => {
   if (isLoggedIn) {
     return (
       <div className="container">
-        <h2>Добро пожаловать, {username}!</h2>
-        <button
-          onClick={() => {
-            setIsLoggedIn(false);
-            context.logout();
-            // sessionStorage.removeItem("user");
-          }}
-        >
-          Выйти
-        </button>
+        <section className="logged-in">
+          <h2>Добро пожаловать, {username}!</h2>
+          <button
+            onClick={() => {
+              setIsLoggedIn(false);
+              context.logout();
+              // sessionStorage.removeItem("user");
+            }}
+          >
+            Выйти
+          </button>
+        </section>
       </div>
     );
   }
@@ -111,7 +113,7 @@ const Login = () => {
         </button>
       </form>
       <section className="under-form">
-        <p>Нет аккаунта? </p>
+        <p className="under-form-text">Нет аккаунта? </p>
         <Link className="under-form-link" to="/signup">
           Зарегистрироваться
         </Link>
