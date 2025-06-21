@@ -15,7 +15,7 @@ function ProductPageTemplate() {
   console.log("productObj[Изображение]", productObj["Изображение"]);
 
   useEffect(() => {
-    const allProducts = fetch("http://localhost:8080/products", {
+    const allProducts = fetch(SERVER_LOCATION + "/products", {
       method: "GET",
     })
       .then((res) => {

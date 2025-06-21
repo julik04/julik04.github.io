@@ -15,7 +15,7 @@ const ProductSearch = () => {
   const allProducts = useMemo(() => getAllProducts(products), [products]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/products", {
+    fetch(SERVER_LOCATION + "/products", {
       method: "GET",
     })
       .then((res) => {
