@@ -1,20 +1,15 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18-alpine
-
-# Set the working directory in the container
+# Stage 1: Build the React application
+FROM node:18-alpine AS build
 WORKDIR /app
-
-# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
-
-# Install project dependencies
 RUN npm install
-
-# Copy the rest of the application's source code to the working directory
 COPY . .
+RUN npm run build
 
-# Make port 3000 available to the world outside this container
+# Stage 2: Serve the application from the build output
+FROM node:18-alpine
+WORKDIR /app
+RUN npm install -g serve
+COPY --from=build /app/build ./build
 EXPOSE 3000
-
-# Run the app when the container launches
-CMD ["npm", "run", "start"]
+CMD ["serve", "-s", "build"]
